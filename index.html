@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audrey Paintings</title>
+<meta name="description" content="Original acrylic paintings of birds, wildlife, pets and landscapes by Audrey. Prints, originals and commissioned pet portraits.">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* one visual world: a sage-green studio wall, paintings on paper-white mats, plum accent pulled from the cockatoos */
+  --sage:#a3b391;        /* page background */
+  --sage-deep:#8a9c78;   /* bands, footer */
+  --sage-pale:#c4d0b6;   /* soft panels */
+  --paper:#f7f5ef;       /* mats and cards */
+  --ink:#24301f;         /* text */
+  --muted:#46553f;
+  --plum:#6f3557;        /* accent: buttons, links */
+  --plum-d:#562843;
+  --display:"Gloock", Georgia, "Times New Roman", serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:70px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important; animation:none!important}}
+body{margin:0; background:var(--sage); color:var(--ink); font:400 17px/1.6 var(--body); -webkit-font-smoothing:antialiased}
+img{max-width:100%; height:auto; display:block}
+a{color:var(--plum)}
+h1,h2,h3{font-family:var(--display); font-weight:400; line-height:1.1; text-wrap:balance; margin:0}
+:focus-visible{outline:3px solid var(--plum); outline-offset:3px}
+.wrap{width:min(1180px,100% - 36px); margin-inline:auto}
+
+/* nav */
+.nav{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--sage) 88%,transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid rgba(36,48,31,.12)}
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:62px}
+.brand{font-family:var(--display); font-size:26px; color:var(--ink); text-decoration:none; letter-spacing:.01em}
+.links{display:flex; gap:22px; font-size:15px; font-weight:500}
+.links a{color:var(--ink); text-decoration:none}
+.links a:hover{color:var(--plum)}
+.menu-btn{display:none; border:0; background:none; font:600 15px var(--body); color:var(--ink); padding:8px 4px; cursor:pointer}
+@media (max-width:760px){
+  .links{display:none; position:absolute; top:62px; left:0; right:0; flex-direction:column; gap:0; background:var(--sage); border-bottom:1px solid rgba(36,48,31,.12)}
+  .links.open{display:flex}
+  .links a{padding:14px 18px; border-top:1px solid rgba(36,48,31,.08)}
+  .menu-btn{display:block}
+}
+
+/* hero */
+.hero{padding:44px 0 30px}
+.hero .wrap{display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center}
+.hero h1{font-size:clamp(40px,6.2vw,74px); letter-spacing:-.01em}
+.hero p.lede{font-size:19px; color:var(--muted); max-width:34ch; margin:18px 0 26px}
+.btns{display:flex; flex-wrap:wrap; gap:12px}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 20px; border-radius:999px; border:1.5px solid var(--plum); background:var(--plum); color:#fff; font:600 15px var(--body); text-decoration:none; cursor:pointer}
+.btn:hover{background:var(--plum-d); border-color:var(--plum-d)}
+.btn.ghost{background:transparent; color:var(--plum)}
+.btn.ghost:hover{background:rgba(111,53,87,.08)}
+.hero-art{position:relative; justify-self:center; width:min(100%,460px)}
+.hero-art .mat{background:var(--paper); padding:18px; box-shadow:0 2px 4px rgba(36,48,31,.12), 0 22px 46px rgba(36,48,31,.28); transform:rotate(1.2deg)}
+.hero-art .mini{position:absolute; width:36%; left:-14%; bottom:-6%; background:var(--paper); padding:9px; box-shadow:0 14px 30px rgba(36,48,31,.3); transform:rotate(-4deg)}
+.hero-art .cap{position:absolute; right:-6px; bottom:-26px; font-size:13px; color:var(--muted); font-style:italic}
+@media (max-width:820px){ .hero .wrap{grid-template-columns:1fr; gap:34px} .hero-art{width:min(86%,400px)} .hero{padding-top:28px} }
+
+/* sections */
+section{padding:64px 0}
+.sec-head{display:flex; align-items:end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:26px}
+.sec-head h2{font-size:clamp(32px,4.4vw,48px)}
+.sec-head p{margin:6px 0 0; color:var(--muted); max-width:52ch}
+
+/* gallery */
+.filters{display:flex; flex-wrap:wrap; gap:8px}
+.chip{border:1.5px solid rgba(36,48,31,.3); background:transparent; color:var(--ink); padding:7px 14px; border-radius:999px; font:500 14px var(--body); cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
+.grid{columns:4 250px; column-gap:22px}
+.card{break-inside:avoid; margin:0 0 22px; display:block; width:100%; border:0; padding:0; background:none; text-align:left; cursor:pointer; color:inherit; font:inherit}
+.card .mat{background:var(--paper); padding:12px; box-shadow:0 1px 2px rgba(36,48,31,.12), 0 10px 24px rgba(36,48,31,.16); transition:transform .25s ease, box-shadow .25s ease}
+.card:hover .mat{transform:translateY(-3px); box-shadow:0 2px 4px rgba(36,48,31,.14), 0 18px 34px rgba(36,48,31,.24)}
+.card .mat.round{border-radius:50%; padding:10px; aspect-ratio:1}
+.card .mat.round img{border-radius:50%}
+.card .meta{display:flex; justify-content:space-between; gap:10px; padding:10px 2px 0; align-items:baseline}
+.card .t{font-family:var(--display); font-size:19px; line-height:1.2}
+.card .s{font-size:13px; color:var(--muted); white-space:nowrap}
+@media (max-width:600px){ .grid{columns:2; column-gap:12px} .card{margin-bottom:16px} .card .mat{padding:7px} .card .t{font-size:16px} .card .s{display:none} }
+.sold{font:600 11px var(--body); letter-spacing:.06em; text-transform:uppercase; color:var(--paper); background:var(--plum); padding:2px 7px; border-radius:999px; vertical-align:3px; margin-left:4px}
+.tag{display:inline-block; font-size:11.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--plum)}
+
+/* shop */
+.band{background:var(--sage-deep)}
+.shop{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+@media (max-width:900px){ .shop{grid-template-columns:1fr} }
+.panel{background:var(--paper); padding:26px; box-shadow:0 10px 26px rgba(36,48,31,.14)}
+.panel h3{font-size:27px; margin-bottom:8px}
+.panel p{margin:0 0 16px; color:var(--muted)}
+.price-list{list-style:none; margin:0 0 18px; padding:0; border-top:1px solid #e3e0d6}
+.price-list li{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #e3e0d6; font-variant-numeric:tabular-nums}
+.price-list b{font-weight:600}
+
+/* commissions */
+.comm{display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:start}
+@media (max-width:860px){ .comm{grid-template-columns:1fr} }
+.steps{list-style:none; padding:0; margin:20px 0 0; display:grid; gap:16px; counter-reset:s}
+.steps li{display:grid; grid-template-columns:40px 1fr; gap:14px; align-items:start}
+.steps li::before{counter-increment:s; content:counter(s); width:40px; height:40px; border-radius:50%; background:var(--paper); display:grid; place-items:center; font-family:var(--display); font-size:19px; color:var(--plum)}
+.steps b{display:block}
+.steps span{color:var(--muted); font-size:15.5px}
+.comm-art{display:flex; gap:16px; margin-top:26px; align-items:center}
+.comm-art img{width:46%; border-radius:50%; background:var(--paper); padding:8px; box-shadow:0 12px 26px rgba(36,48,31,.22)}
+.comm-art p{font-size:14.5px; color:var(--muted); margin:0}
+form{background:var(--paper); padding:26px; box-shadow:0 10px 26px rgba(36,48,31,.14); display:grid; gap:14px}
+label{display:grid; gap:6px; font-size:14px; font-weight:600}
+input,select,textarea{font:400 16px var(--body); color:var(--ink); padding:11px 12px; border:1.5px solid #d6d3c8; border-radius:8px; background:#fff; width:100%}
+textarea{min-height:110px; resize:vertical}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:480px){ .row2{grid-template-columns:1fr} }
+.form-note{font-size:13px; color:var(--muted); margin:0}
+.sent{display:none; background:var(--sage-pale); padding:14px 16px; border-radius:8px; font-size:15px}
+
+/* about */
+.about{display:grid; grid-template-columns:.8fr 1.2fr; gap:48px; align-items:center}
+@media (max-width:820px){ .about{grid-template-columns:1fr} }
+.about .portrait{background:var(--sage-pale); aspect-ratio:4/5; display:grid; place-items:center; color:var(--muted); font-size:14px; text-align:center; padding:20px; border:2px dashed rgba(36,48,31,.25)}
+.about p{max-width:60ch}
+
+footer{background:var(--sage-deep); padding:34px 0; font-size:14.5px}
+footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+
+/* lightbox */
+.lb{position:fixed; inset:0; z-index:100; background:rgba(28,36,25,.94); display:none; color:var(--paper)}
+.lb.open{display:grid; grid-template-columns:1fr 340px}
+.lb-stage{display:grid; place-items:center; padding:28px; min-height:0; position:relative}
+.lb-stage img{max-height:calc(100vh - 56px); max-width:100%; object-fit:contain; background:var(--paper); padding:12px; box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.lb-stage img.round{border-radius:50%; padding:10px}
+.lb-side{background:var(--paper); color:var(--ink); padding:28px 24px; overflow:auto; display:flex; flex-direction:column; gap:14px}
+.lb-side h3{font-size:32px}
+.lb-side dl{display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0; font-size:15px}
+.lb-side dt{color:var(--muted)}
+.lb-side dd{margin:0}
+.lb-side .btn{width:100%}
+.lb-x,.lb-nav{position:absolute; border:0; background:rgba(247,245,239,.14); color:var(--paper); width:46px; height:46px; border-radius:50%; font-size:24px; cursor:pointer; display:grid; place-items:center}
+.lb-x{top:14px; right:14px}
+.lb-prev{left:14px; top:50%; transform:translateY(-50%)}
+.lb-next{right:14px; top:50%; transform:translateY(-50%)}
+@media (max-width:820px){
+  .lb.open{grid-template-columns:1fr; grid-template-rows:auto 1fr; overflow:auto}
+  .lb-stage{padding:60px 16px 18px}
+  .lb-stage img{max-height:58vh}
+  .lb-side{padding:22px 18px 30px}
+}
+/* ---------- frame & lighting viewer ---------- */
+.vw{position:fixed; inset:0; z-index:120; display:none; background:#1c2419}
+.vw.open{display:grid; grid-template-columns:1fr 340px}
+.vw-stage{position:relative; overflow:hidden; perspective:1400px; touch-action:pan-y; background:var(--sage); transition:background .35s; min-height:0}
+.vw-layer,.vw-beam{position:absolute; inset:0; pointer-events:none}
+.vw-beam{mix-blend-mode:screen; filter:blur(6px)}
+.vw-piece{position:absolute; transform-style:preserve-3d}
+.vw-tilt{position:absolute; inset:0; transform-style:preserve-3d; will-change:transform}
+.vw-cast{position:absolute; inset:0}
+.vw-side{position:absolute}
+.vw-side.t{left:0; top:0; width:100%; transform-origin:top; transform:rotateX(90deg)}
+.vw-side.b{left:0; bottom:0; width:100%; transform-origin:bottom; transform:rotateX(-90deg)}
+.vw-side.l{left:0; top:0; height:100%; transform-origin:left; transform:rotateY(-90deg)}
+.vw-side.r{right:0; top:0; height:100%; transform-origin:right; transform:rotateY(90deg)}
+.vw-frame{position:absolute; inset:0}
+.vw-mat{position:relative; width:100%; height:100%}
+.vw-art{display:block; width:100%; height:100%; object-fit:cover}
+.vw-sheen,.vw-glare{position:absolute; inset:0; pointer-events:none}
+.vw-sheen{mix-blend-mode:soft-light} .vw-glare{mix-blend-mode:screen}
+.vw-round .vw-frame,.vw-round .vw-mat,.vw-round .vw-art,.vw-round .vw-cast,.vw-round .vw-sheen,.vw-round .vw-glare{border-radius:50%}
+.vw-round .vw-side{display:none}
+.vf-black{background:linear-gradient(145deg,#3a3a3a,#141414 40%,#0c0c0c)}
+.vf-white{background:linear-gradient(145deg,#fff,#eceae5 50%,#dcd9d2)}
+.vf-oak{background:repeating-linear-gradient(90deg,rgba(120,80,40,0) 0 3px,rgba(120,80,40,.18) 3px 4px,rgba(120,80,40,0) 4px 9px),linear-gradient(145deg,#e0c08c,#c79f62 50%,#a9824a)}
+.vf-walnut{background:repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 4px,rgba(0,0,0,.2) 4px 5px,rgba(0,0,0,0) 5px 11px),linear-gradient(145deg,#7a5235,#5a3a24 50%,#3d2616)}
+.vf-gold{background:linear-gradient(135deg,#7b5c22,#e9d08a 22%,#9c7a33 45%,#f3e1a6 62%,#8a6a2a 85%,#c9a95b)}
+.vw-frame:not(.vf-none)::after{content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 2px 2px 2px rgba(255,255,255,.35), inset -2px -2px 3px rgba(0,0,0,.45), inset 0 0 0 1px rgba(0,0,0,.25)}
+.vw-mat.has{box-shadow:inset 1px 1px 2px rgba(0,0,0,.25), inset -1px -1px 1px rgba(255,255,255,.5)}
+.vw-deep .vw-mat{box-shadow:inset 0 16px 20px rgba(0,0,0,.42), inset 0 3px 4px rgba(0,0,0,.35), inset 10px 0 14px rgba(0,0,0,.18), inset -10px 0 14px rgba(0,0,0,.18)!important}
+.vw-deep .vw-art{box-shadow:3px 12px 16px rgba(0,0,0,.42)}
+.vw-floor{position:absolute; left:0; right:0; bottom:0; background:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 1px,transparent 1px 90px),linear-gradient(#b89a76,#9d7f5d)}
+.vw-base{position:absolute; left:0; right:0; background:#f7f5f0}
+.vw-sofa{position:absolute} .vw-sofa div{position:absolute; border-radius:10px}
+.vw-sofa .bk{left:6%; right:6%; top:0; height:62%; background:linear-gradient(#c8b9a6,#b3a38f)}
+.vw-sofa .st{left:6%; right:6%; top:48%; height:30%; background:linear-gradient(#cdbfac,#a89884)}
+.vw-sofa .am{top:28%; height:56%; width:11%; background:linear-gradient(#c0b19d,#a29280)} .vw-sofa .am.l{left:0} .vw-sofa .am.r{right:0}
+.vw-sofa .lg{width:2%; height:12%; bottom:0; top:auto; background:#3b2c20; border-radius:2px}
+.vw-label{position:absolute; background:#fbfaf7; color:var(--ink); padding:9px 11px 10px; width:170px; box-shadow:0 2px 6px rgba(0,0,0,.18); font-size:11.5px; line-height:1.4}
+.vw-label b{display:block; font-family:var(--display); font-weight:400; font-size:15px; margin-bottom:2px}
+.vw-hint{position:absolute; left:50%; bottom:12px; transform:translateX(-50%); font-size:12px; font-weight:600; padding:6px 12px; border-radius:20px; background:rgba(247,245,239,.85); color:var(--ink); pointer-events:none; transition:opacity .6s; white-space:nowrap}
+.vw-x{position:absolute; top:12px; right:12px; z-index:5; border:0; width:44px; height:44px; border-radius:50%; background:rgba(28,36,25,.55); color:#fff; font-size:24px; cursor:pointer}
+.vw-panel{background:var(--paper); color:var(--ink); padding:22px 20px 28px; overflow:auto; display:flex; flex-direction:column; gap:16px}
+.vw-panel h3{font-size:28px}
+.vw-sec{display:grid; gap:8px}
+.vw-lbl{font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.vw-row{display:flex; flex-wrap:wrap; gap:8px}
+.fsw{width:44px; height:44px; border-radius:4px; border:0; padding:0; cursor:pointer; position:relative; box-shadow:0 0 0 1px #d6d3c8}
+.fsw span{position:absolute; inset:9px; background:#fff; box-shadow:inset 1px 1px 2px rgba(0,0,0,.3)}
+.fsw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--plum)}
+.fsw-none{background:repeating-linear-gradient(45deg,#fff 0 5px,#eee 5px 10px)}
+.fsw-wrap{display:grid; justify-items:center; gap:3px; font-size:11px; color:var(--muted)}
+.wsw{width:32px; height:32px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1px #cfccc2; cursor:pointer; padding:0}
+.wsw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--plum)}
+.vw-panel .chip[disabled]{opacity:.4; cursor:not-allowed}
+@media (max-width:820px){
+  .vw.open{grid-template-columns:1fr; grid-template-rows:56vh auto; overflow:auto}
+  .vw-panel{padding:18px 16px 30px}
+}
+/* AR sheet */
+.ar{position:fixed; inset:0; z-index:140; background:rgba(20,26,18,.8); display:none; align-items:center; justify-content:center; padding:14px}
+.ar.open{display:flex}
+.ar-sheet{background:var(--paper); border-radius:12px; width:min(720px,100%); height:min(86vh,760px); display:flex; flex-direction:column; overflow:hidden}
+.ar-h{display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid #e3e0d6}
+.ar-h b{font-family:var(--display); font-weight:400; font-size:21px}
+.ar-h button{border:0; background:none; font-size:28px; line-height:1; cursor:pointer; color:var(--ink)}
+model-viewer{position:relative; flex:1; width:100%; background:linear-gradient(var(--sage-pale),var(--sage)); --poster-color:transparent}
+model-viewer:not(:defined) .ar-place{display:none}
+.ar-place{position:absolute; left:50%; bottom:18px; transform:translateX(-50%); border:0; border-radius:999px; padding:14px 22px; background:var(--plum); color:#fff; font:600 15px var(--body); box-shadow:0 6px 18px rgba(0,0,0,.25); white-space:nowrap}
+.ar-f{padding:10px 16px 16px; font-size:14px; color:var(--muted); line-height:1.5}
+.ar-f b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">Audrey</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links">Menu</button>
+    <div class="links" id="links">
+      <a href="#gallery">Gallery</a>
+      <a href="#shop">Shop</a>
+      <a href="#commissions">Commissions</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="tag">Original acrylic paintings</span>
+      <h1 style="margin-top:10px">Birds, wild things and the animals we love</h1>
+      <p class="lede">Hand-painted portraits of cockatoos, foxes, fawns and family pets, from palm-sized minis to statement canvases.</p>
+      <div class="btns">
+        <a class="btn" href="#gallery">See the paintings</a>
+        <a class="btn ghost" href="#commissions">Commission a pet portrait</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="mat"><img src="art/pink-cockatoo.jpg" alt="Painting of a pink cockatoo against a soft blue sky" width="984" height="1249"></div>
+      <div class="mini"><img src="art/thumb/frog.jpg" alt="Mini painting of a green frog" width="604" height="615"></div>
+    </div>
+  </div>
+</header>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Gallery</h2>
+        <p>Tap any painting to see it larger, order a print or ask about the original.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filter paintings"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="shop" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Shop</h2>
+        <p>Every painting is available as a print. Originals and commissions are one of a kind.</p>
+      </div>
+    </div>
+    <div class="shop">
+      <div class="panel">
+        <span class="tag">Prints</span>
+        <h3>Fine art prints</h3>
+        <p>Printed on heavyweight matte paper with archival inks, signed by Audrey.</p>
+        <ul class="price-list" id="printPrices"></ul>
+        <a class="btn" href="#gallery">Choose a painting</a>
+      </div>
+      <div class="panel">
+        <span class="tag">Originals</span>
+        <h3>The painting itself</h3>
+        <p>Own the canvas Audrey painted. Each original ships wrapped and signed on the back.</p>
+        <ul class="price-list">
+          <li><span>Minis (about 3–4 in)</span><b>Inquire</b></li>
+          <li><span>Small (5×7 to 8×10 in)</span><b>Inquire</b></li>
+          <li><span>Large canvases</span><b>Inquire</b></li>
+        </ul>
+        <a class="btn ghost" href="#contact" data-inquire="an original painting">Ask about an original</a>
+      </div>
+      <div class="panel">
+        <span class="tag">Commissions</span>
+        <h3>Paint my animal</h3>
+        <p>A portrait of your dog, cat, horse or favorite bird, painted from your photos.</p>
+        <ul class="price-list" id="commPrices"></ul>
+        <a class="btn" href="#commissions">Start a commission</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="commissions">
+  <div class="wrap comm">
+    <div>
+      <h2 style="font-size:clamp(32px,4.4vw,48px)">Commission a portrait</h2>
+      <p style="color:var(--muted); max-width:52ch">Send a few photos of your pet or the animal you love, and Audrey will paint it in her style on the canvas size you choose.</p>
+      <ol class="steps">
+        <li><div><b>Share your photos</b><span>Clear, well-lit photos at your animal's eye level work best. Send three or four.</span></div></li>
+        <li><div><b>Pick a size and shape</b><span>Square, rectangle or round canvas, from mini to large.</span></div></li>
+        <li><div><b>Approve the sketch</b><span>Audrey sends a quick sketch so you can request changes before painting starts.</span></div></li>
+        <li><div><b>Receive your painting</b><span>Most portraits take two to four weeks, then ship signed and ready to hang.</span></div></li>
+      </ol>
+      <div class="comm-art">
+        <img src="art/thumb/dachshund.webp" alt="Round painting of a dachshund looking up from the grass" width="720" height="720">
+        <p>A round-canvas pet portrait. Round canvases make a sweet gift and look great in a group.</p>
+      </div>
+    </div>
+    <form id="commForm" novalidate>
+      <div class="row2">
+        <label for="cName">Your name<input id="cName" name="name" autocomplete="name" required></label>
+        <label for="cEmail">Email<input id="cEmail" name="email" type="email" autocomplete="email" required></label>
+      </div>
+      <label for="cSubject">What should Audrey paint?<input id="cSubject" name="subject" placeholder="e.g. my golden retriever, Sunny"></label>
+      <div class="row2">
+        <label for="cSize">Size
+          <select id="cSize" name="size">
+            <option>Mini (about 4×4 in)</option>
+            <option>Small (8×10 in)</option>
+            <option>Round (10 in)</option>
+            <option>Large (16×20 in)</option>
+            <option>Not sure yet</option>
+          </select>
+        </label>
+        <label for="cDate">Needed by<input id="cDate" name="date" type="date"></label>
+      </div>
+      <label for="cPhotos">Photos (optional)<input id="cPhotos" name="photos" type="file" accept="image/*" multiple></label>
+      <label for="cMsg">Anything else?<textarea id="cMsg" name="message" placeholder="Personality, favorite toy, background color…"></textarea></label>
+      <button class="btn" type="submit">Send request</button>
+      <p class="form-note">Audrey replies within a few days with a quote and timeline.</p>
+      <div class="sent" id="sent" role="status"></div>
+    </form>
+  </div>
+</section>
+
+<section id="about" class="band">
+  <div class="wrap about">
+    <div class="portrait">Photo of Audrey at her easel goes here</div>
+    <div>
+      <h2 style="font-size:clamp(32px,4.4vw,48px); margin-bottom:16px">About Audrey</h2>
+      <p>Audrey paints animals with personality: a cockatoo mid-ruffle, a fawn tucked into the ferns, a frog sizing you up from the pond. She works in acrylic, building color in loose, layered strokes so every feather and ripple keeps the energy of the brush.</p>
+      <p>Her work ranges from tiny canvases that fit in your palm to large statement pieces. When she isn't painting wildlife, she's painting someone's beloved pet.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap" style="max-width:720px">
+    <h2 style="font-size:clamp(32px,4.4vw,48px); margin-bottom:12px">Say hello</h2>
+    <p style="color:var(--muted)">Questions about a painting, a print order or a commission? Email Audrey at <a href="mailto:hello@audreypaints.com">hello@audreypaints.com</a> (hello@audreypaints.com) or follow new work on Instagram at <a href="https://instagram.com/">@audreypaints</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Audrey. All paintings and images are the artist's own.</span>
+    <a href="#top" style="color:var(--ink)">Back to top</a>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+  <div class="lb-stage">
+    <img id="lbImg" alt="">
+    <button class="lb-x" id="lbX" aria-label="Close">×</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous painting">‹</button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next painting">›</button>
+  </div>
+  <aside class="lb-side">
+    <span class="tag" id="lbTag"></span>
+    <h3 id="lbTitle"></h3>
+    <p id="lbDesc" style="margin:0; color:var(--muted)"></p>
+    <dl id="lbDl"></dl>
+    <label for="lbPrint">Print size
+      <select id="lbPrint"></select>
+    </label>
+    <button class="btn" id="lbAR">View on your wall</button>
+    <button class="btn ghost" id="lbView">Preview in a frame</button>
+    <button class="btn" id="lbBuy">Order this print</button>
+    <button class="btn ghost" id="lbOrig">Ask about the original</button>
+    <p class="form-note" id="lbNote"></p>
+  </aside>
+</div>
+
+<!-- frame & lighting viewer -->
+<div class="vw" id="vw" role="dialog" aria-modal="true" aria-labelledby="vwTitle">
+  <div class="vw-stage" id="vwStage">
+    <div class="vw-layer" id="vwLight"></div>
+    <div class="vw-floor" id="vwFloor"></div><div class="vw-base" id="vwBase"></div>
+    <div class="vw-sofa" id="vwSofa"><div class="bk"></div><div class="am l"></div><div class="am r"></div><div class="st"></div><div class="lg" style="left:6%"></div><div class="lg" style="right:6%"></div></div>
+    <div class="vw-beam" id="vwBeam"></div>
+    <div class="vw-piece" id="vwPiece"><div class="vw-tilt" id="vwTilt">
+      <div class="vw-cast" id="vwCast"></div>
+      <div class="vw-side t" id="vsT"></div><div class="vw-side b" id="vsB"></div><div class="vw-side l" id="vsL"></div><div class="vw-side r" id="vsR"></div>
+      <div class="vw-frame" id="vwFrame"><div class="vw-mat" id="vwMat"><img class="vw-art" id="vwArt" alt=""><div class="vw-sheen" id="vwSheen"></div><div class="vw-glare" id="vwGlare"></div></div></div>
+    </div></div>
+    <div class="vw-label" id="vwLabel"></div>
+    <div class="vw-hint" id="vwHint">Drag across the painting to tilt it</div>
+    <button class="vw-x" id="vwX" aria-label="Close preview">×</button>
+  </div>
+  <aside class="vw-panel">
+    <div><span class="tag">Preview</span><h3 id="vwTitle"></h3></div>
+    <div class="vw-sec"><span class="vw-lbl">Setting</span><div class="vw-row" id="vwModes"></div></div>
+    <div class="vw-sec"><span class="vw-lbl">Frame</span><div class="vw-row" id="vwFrames"></div></div>
+    <div class="vw-sec"><span class="vw-lbl">Mat</span><div class="vw-row" id="vwMats"></div></div>
+    <div class="vw-sec" id="vwWallSec"><span class="vw-lbl">Wall color</span><div class="vw-row" id="vwWalls"></div></div>
+    <button class="btn" id="vwAR">View on your wall</button>
+    <p class="form-note" id="vwNote">Frames shown here are a preview. Ask Audrey about framing when you order.</p>
+  </aside>
+</div>
+
+<!-- AR -->
+<div class="ar" id="ar" role="dialog" aria-modal="true" aria-labelledby="arTitle">
+  <div class="ar-sheet">
+    <div class="ar-h"><b id="arTitle">View on your wall</b><button id="arX" aria-label="Close">×</button></div>
+    <model-viewer id="mv" camera-controls touch-action="pan-y" shadow-intensity="1" exposure="1.05"
+      ar ar-modes="webxr scene-viewer quick-look" ar-placement="wall" ar-scale="fixed" camera-orbit="0deg 90deg auto">
+      <button slot="ar-button" class="ar-place">Place on my wall</button>
+    </model-viewer>
+    <div class="ar-f" id="arFoot"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- edit paintings here ---------- */
+const PRINTS=[["5×7 in","$25"],["8×10 in","$40"],["11×14 in","$65"]];
+const COMMISSIONS=[["Mini, about 4×4 in","from $60"],["8×10 in","from $150"],["Round, 10 in","from $175"],["16×20 in","from $350"]];
+const ART=[
+ {id:"pink-cockatoo", title:"Pink Cockatoo", cat:["birds"], w:16, h:20, depth:0.75, edge:"#8fb0cf", desc:"A Major Mitchell's-style cockatoo glowing coral and pink against a cloudy blue sky."},
+ {id:"white-cockatoo", title:"Cockatoo in Green", sold:true, cat:["birds"], w:16, h:20, depth:0.75, edge:"#5f8c4f", desc:"Soft white plumage with a pink crest and lilac wings, set against a dappled green."},
+ {id:"fawn", title:"Fawn in the Ferns", cat:["wildlife"], w:6, h:4, depth:0.15, edge:"#3f6b35", desc:"A spotted fawn peeking out from a tangle of leaves and tall grass."},
+ {id:"moonlit-swan", title:"Moonlit Swan", cat:["birds","water"], w:11, h:14, depth:0.75, edge:"#141a1c", desc:"A swan gliding across a dark pond under a full moon, ripples catching the light."},
+ {id:"duckling", title:"Duckling Among the Lily Pads", cat:["birds","water"], w:4, h:6, depth:0.15, edge:"#3e7fa0", desc:"A fluffy yellow duckling paddling through reflections and lily pads."},
+ {id:"wild-horse", title:"Wild Horse", cat:["wildlife","landscapes"], w:14, h:11, depth:0.75, edge:"#e8b960", desc:"A grey horse with a dark mane standing in a meadow of pink and gold hills."},
+ {id:"fox", title:"Red Fox in Snow", cat:["wildlife"], w:5, h:7, depth:0.15, edge:"#2c3a4c", desc:"A red fox standing alert in a snowy night meadow."},
+ {id:"hummingbird", title:"Hummingbird", cat:["birds"], w:6, h:5, depth:0.15, edge:"#7a4a7a", desc:"An emerald hummingbird mid-flight against a sunset sky."},
+ {id:"longhorn", title:"Longhorn in the Shade", cat:["wildlife","landscapes"], w:12, h:9, depth:0.75, edge:"#d9c37a", desc:"A Texas longhorn resting beneath an oak on a golden summer afternoon."},
+ {id:"dachshund", title:"Dachshund Portrait", cat:["pets"], w:10, h:10, depth:0.6, edge:"#3f7a3a", round:true, desc:"A red dachshund looking up from the grass, painted on a round canvas."},
+ {id:"frog", title:"Pond Frog", cat:["wildlife","water","minis"], w:4, h:4, depth:0.6, edge:"#2d4a6a", desc:"A wide-eyed green frog peering up from the pond."},
+ {id:"swan-pair", title:"Two Swans", cat:["birds","water","minis"], w:4, h:4, depth:0.6, edge:"#1d2430", desc:"A pair of swans drifting together on a night-dark lake."},
+ {id:"golden-wave", title:"Golden Wave", cat:["landscapes","water","minis"], w:4, h:4, depth:0.15, edge:"#c9a25a", desc:"A turquoise wave curling onto the sand at sunset."},
+ {id:"sunflower-meadow", title:"Sunflower Meadow", cat:["landscapes","minis"], w:4, h:4, depth:0.15, edge:"#6aa04a", desc:"Wild sunflowers below a mountain under a lavender-and-gold sky."}
+];
+const dimText=a=>a.round?`${a.w} in round (approx.)`:`${a.w} × ${a.h} in (approx.)`;
+const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[419,361],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
+const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","Pets"],["water","Water"],["landscapes","Landscapes"],["minis","Minis"]];
+const EMAIL="hello@audreypaints.com";
+
+const $=id=>document.getElementById(id);
+const src=(a,thumb)=>`art/${thumb?"thumb/":""}${a.id}.${a.id==="dachshund"?"webp":"jpg"}`;
+let filter="all", shown=ART, idx=0;
+
+function renderFilters(){
+  $("filters").innerHTML="";
+  FILTERS.forEach(([k,l])=>{
+    const b=document.createElement("button"); b.className="chip"; b.textContent=l; b.setAttribute("aria-pressed",k===filter);
+    b.onclick=()=>{filter=k; renderFilters(); renderGrid();}; $("filters").appendChild(b);
+  });
+}
+function renderGrid(){
+  shown = filter==="all" ? ART : ART.filter(a=>a.cat.includes(filter));
+  const g=$("grid"); g.innerHTML="";
+  shown.forEach((a,i)=>{
+    const [w,h]=DIMS[a.id], tw=Math.min(720,w), th=Math.round(h*tw/w);
+    const b=document.createElement("button"); b.className="card"; b.setAttribute("aria-label",`View ${a.title}`);
+    b.innerHTML=`<div class="mat${a.round?" round":""}"><img src="${src(a,true)}" alt="${a.desc}" width="${tw}" height="${th}" loading="lazy"></div>
+      <div class="meta"><span class="t">${a.title}${a.sold?' <span class="sold">Sold</span>':""}</span><span class="s">${a.round?a.w+" in round":a.w+" × "+a.h+" in"}</span></div>`;
+    b.onclick=()=>openLB(i); g.appendChild(b);
+  });
+}
+function openLB(i){
+  idx=(i+shown.length)%shown.length; const a=shown[idx];
+  const im=$("lbImg"); im.src=src(a); im.alt=a.desc; im.className=a.round?"round":"";
+  $("lbTag").textContent=a.cat.map(c=>FILTERS.find(f=>f[0]===c)[1]).join(" · ");
+  $("lbTitle").textContent=a.title; $("lbDesc").textContent=a.desc;
+  $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd><dt>Original</dt><dd>${a.sold?"Sold · prints available":"Ask for availability"}</dd>`;
+  $("lbOrig").style.display=a.sold?"none":"";
+  $("lbPrint").innerHTML=PRINTS.map(([s,p])=>`<option>${s} · ${p}</option>`).join("");
+  $("lbNote").textContent="";
+  $("lb").classList.add("open"); document.body.style.overflow="hidden"; $("lbX").focus();
+}
+function closeLB(){ $("lb").classList.remove("open"); document.body.style.overflow=""; }
+$("lbX").onclick=closeLB; $("lbPrev").onclick=()=>openLB(idx-1); $("lbNext").onclick=()=>openLB(idx+1);
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&$("ar").classList.contains("open")){$("ar").classList.remove("open");return;} if(e.key==="Escape"&&$("vw").classList.contains("open")){closeViewer();return;} if(!$("lb").classList.contains("open")||$("vw").classList.contains("open")) return;
+  if(e.key==="Escape") closeLB(); if(e.key==="ArrowLeft") openLB(idx-1); if(e.key==="ArrowRight") openLB(idx+1); });
+let tx=null; $("lb").addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
+$("lb").addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>60) openLB(idx+(dx<0?1:-1)); tx=null; });
+$("lbBuy").onclick=()=>{ const a=shown[idx]; $("lbNote").textContent=`Checkout isn't connected yet. For now, email ${EMAIL} to order "${a.title}" as a ${$("lbPrint").value.split(" · ")[0]} print.`; };
+$("lbAR").onclick=()=>{ V.frame="none"; V.mat="none"; V.mode="gallery"; openAR(shown[idx]); };
+$("lbView").onclick=()=>openViewer(shown[idx]);
+$("lbOrig").onclick=()=>{ const a=shown[idx]; closeLB(); prefill(`the original "${a.title}"`); };
+
+function prefill(what){
+  $("cSubject").value=""; $("cMsg").value=`Hi Audrey, I'm interested in ${what}.`;
+  document.getElementById("commissions").scrollIntoView(); setTimeout(()=>$("cName").focus(),400);
+}
+document.querySelectorAll("[data-inquire]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault(); prefill(a.dataset.inquire);}));
+
+$("printPrices").innerHTML=PRINTS.map(([s,p])=>`<li><span>${s}</span><b>${p}</b></li>`).join("");
+$("commPrices").innerHTML=COMMISSIONS.map(([s,p])=>`<li><span>${s}</span><b>${p}</b></li>`).join("");
+
+$("commForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const n=$("cName").value.trim(), em=$("cEmail").value.trim();
+  const s=$("sent"); s.style.display="block";
+  if(!n||!/^\S+@\S+\.\S+$/.test(em)){ s.textContent="Please add your name and a valid email so Audrey can reply."; return; }
+  s.textContent=`Thanks, ${n.split(" ")[0]}! This form isn't connected to email yet, so nothing was sent. Until it is, please email ${EMAIL} with your request and photos.`;
+});
+
+const mb=$("menuBtn"); mb.onclick=()=>{ const o=$("links").classList.toggle("open"); mb.setAttribute("aria-expanded",o); };
+$("links").querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{ $("links").classList.remove("open"); mb.setAttribute("aria-expanded","false"); }));
+$("yr").textContent=new Date().getFullYear();
+renderFilters(); renderGrid();
+/* ================= frame & lighting viewer ================= */
+const V={mode:"gallery", frame:"none", mat:"none", wall:"#a3b391"};
+const V_MODES=[["gallery","Gallery wall"],["museum","Museum"],["shadow","Shadow box"],["room","Above a sofa"]];
+const V_FRAMES=[["none","None"],["black","Black"],["white","White"],["oak","Oak"],["walnut","Walnut"],["gold","Gold"]];
+const V_MATS=[["none","None",""],["white","White","#fbfaf6"],["cream","Cream","#efe6d2"]];
+const V_WALLS=[["#a3b391","Sage"],["#f1efea","Warm white"],["#dcdcd8","Dove"],["#e7d6cf","Blush"],["#2f3b4f","Navy"],["#3a3c40","Charcoal"]];
+const V_DEPTH={black:.9, white:.9, oak:1, walnut:1.1, gold:1.3};
+const V_SIDE={black:"#141414", white:"#d9d6cf", oak:"#b48d55", walnut:"#4a2f1c", gold:"#a8873f"};
+let vArt=null, vGeo={k:1,museum:false,dark:false,glass:false,L:1};
+const vcur={rx:0,ry:0}, vtgt={rx:0,ry:0}; let vInter=false, vDown=false, vRunning=false;
+
+function vGeom(a){ // inches
+  const round=!!a.round, shadow=V.mode==="shadow" && !round;
+  const f = round||V.frame==="none" ? 0 : (shadow?1.9:(V.frame==="gold"?1.75:1.15));
+  let m = (round||V.frame==="none") ? 0 : (V.mat==="none"?0:2.25); if(shadow) m=Math.max(m,1.75);
+  const d = round||V.frame==="none" ? a.depth : (shadow?2.4:V_DEPTH[V.frame]);
+  return {f,m,d,shadow,round,W:a.w+2*(f+m),H:a.h+2*(f+m)};
+}
+function vChips(el,items,key,disabledFn){
+  el.innerHTML=""; items.forEach(([k,l])=>{ const b=document.createElement("button"); b.className="chip"; b.textContent=l;
+    b.setAttribute("aria-pressed",V[key]===k); if(disabledFn&&disabledFn(k)) b.disabled=true;
+    b.onclick=()=>{V[key]=k; vUI(); vRender();}; el.appendChild(b); });
+}
+function vUI(){
+  const a=vArt, round=!!a.round;
+  vChips($("vwModes"),V_MODES,"mode",k=>round&&k==="shadow");
+  const fr=$("vwFrames"); fr.innerHTML="";
+  V_FRAMES.forEach(([k,l])=>{ const w=document.createElement("div"); w.className="fsw-wrap";
+    const b=document.createElement("button"); b.className="fsw "+(k==="none"?"fsw-none":"vf-"+k); b.innerHTML="<span></span>";
+    b.setAttribute("aria-pressed",V.frame===k); b.setAttribute("aria-label",l+" frame");
+    if(round&&k!=="none"){b.disabled=true; b.style.opacity=.35;}
+    b.onclick=()=>{V.frame=k; if(k==="none") V.mat="none"; else if(V.mat==="none") V.mat="white"; vUI(); vRender();};
+    w.appendChild(b); w.appendChild(Object.assign(document.createElement("span"),{textContent:l==="None"?"Canvas":l})); fr.appendChild(w); });
+  vChips($("vwMats"),V_MATS,"mat",()=>round||V.frame==="none");
+  const wl=$("vwWalls"); wl.innerHTML="";
+  V_WALLS.forEach(([c,l])=>{ const b=document.createElement("button"); b.className="wsw"; b.style.background=c; b.title=l; b.setAttribute("aria-label",l+" wall");
+    b.setAttribute("aria-pressed",V.wall===c); b.onclick=()=>{V.wall=c; vUI(); vRender();}; wl.appendChild(b); });
+  $("vwWallSec").style.display = V.mode==="museum"?"none":"";
+  $("vwNote").textContent = round ? "Round canvases hang unframed. The preview shows it at its approximate real size." : "Frames are a preview of how it could look. Ask Audrey about framing when you order.";
+}
+function vRender(){
+  const a=vArt, st=$("vwStage"), SW=st.clientWidth, SH=st.clientHeight; if(!SW) return;
+  const g=vGeom(a), room=V.mode==="room", museum=V.mode==="museum";
+  let scale,cx,cy; const wide=SW>620;
+  if(room){
+    scale=SW/Math.max(118,g.W*2.1); const floorH=SH*.13, wallB=SH-floorH, sofaH=33*scale, sofaW=84*scale, sofaTop=wallB-sofaH;
+    cx=SW/2; cy=sofaTop-9*scale-g.H*scale/2;
+    if(cy-g.H*scale/2<SH*.06){ scale*=(sofaTop-SH*.06)/(sofaTop-cy+g.H*scale/2); cy=sofaTop-9*scale-g.H*scale/2; }
+    Object.assign($("vwFloor").style,{height:floorH+"px",display:""});
+    Object.assign($("vwBase").style,{bottom:floorH+"px",height:Math.max(4,5*scale)+"px",display:""});
+    Object.assign($("vwSofa").style,{left:(SW/2-42*scale)+"px",top:(wallB-33*scale+2)+"px",width:84*scale+"px",height:33*scale+"px",display:""});
+  } else {
+    // show the piece at a believable size: small works are not blown up to fill the wall
+    const availW=wide?SW-230:SW*.82, availH=wide?SH*.72:SH*.6;
+    const fit=Math.min(availW/g.W, availH/g.H), cap=Math.min(SW,SH)/26; // ~26 in of wall visible at least
+    scale=Math.min(fit, Math.max(cap, fit*.55)); cx=wide?(SW-200)/2+10:SW/2; cy=wide?SH*.47:SH*.42;
+    ["vwFloor","vwBase","vwSofa"].forEach(id=>$(id).style.display="none");
+  }
+  const W=g.W*scale, H=g.H*scale, L=1;
+  const dark = museum || ["#3a3c40","#2f3b4f"].includes(V.wall);
+  st.style.background = museum ? "#17181a" : V.wall;
+  $("vwLight").style.background = museum
+    ? `radial-gradient(ellipse ${W*1.2}px ${H*1.1}px at ${cx}px ${cy}px, rgba(255,232,196,.16), rgba(0,0,0,0) 72%), radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55))`
+    : `radial-gradient(ellipse ${Math.max(W*1.6,SW*.7)}px ${H*1.3}px at ${cx}px ${cy-H*.55}px, rgba(255,248,232,${dark?.16:.38}), rgba(255,255,255,0) 70%), linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.08))`;
+  const beam=$("vwBeam");
+  beam.style.background = museum ? "linear-gradient(to bottom, rgba(255,236,205,.02), rgba(255,236,205,.13))" : "none";
+  beam.style.clipPath = museum ? `polygon(${cx-14}px 0, ${cx+14}px 0, ${cx+W*.78}px ${cy+H*.62}px, ${cx-W*.78}px ${cy+H*.62}px)` : "none";
+  const fade = museum ? `linear-gradient(to bottom, #000 ${cy+H*.2}px, transparent ${cy+H*.62}px)` : "none";
+  beam.style.maskImage=fade; beam.style.webkitMaskImage=fade;
+
+  const pc=$("vwPiece"); Object.assign(pc.style,{left:(cx-W/2)+"px",top:(cy-H/2)+"px",width:W+"px",height:H+"px"});
+  pc.className="vw-piece"+(g.round?" vw-round":"");
+  const fr=$("vwFrame"), mt=$("vwMat");
+  fr.className="vw-frame vf-"+(g.f?V.frame:"none")+(g.shadow?" vw-deep":"");
+  fr.style.padding=g.f*scale+"px"; mt.style.padding=g.m*scale+"px";
+  const matCol = g.shadow && V.mat==="none" ? "#e9e4da" : ((V_MATS.find(x=>x[0]===V.mat)||[])[2]||"transparent");
+  mt.className="vw-mat"+(g.m?" has":""); mt.style.background = g.m ? matCol : "transparent";
+  const art=$("vwArt"); const s=src(a); if(art.getAttribute("src")!==s) art.src=s;
+  const D=Math.max(3,g.d*scale); fr.style.transform=`translateZ(${D}px)`;
+  const sc = g.f ? V_SIDE[V.frame] : (a.edge||"#d9d4c8");
+  const shade=k=>`linear-gradient(rgba(${k>0?"255,255,255":"0,0,0"},${Math.abs(k)}),rgba(${k>0?"255,255,255":"0,0,0"},${Math.abs(k)})), ${sc}`;
+  Object.assign($("vsT").style,{height:D+"px",background:shade(.18)}); Object.assign($("vsB").style,{height:D+"px",background:shade(-.4)});
+  Object.assign($("vsL").style,{width:D+"px",background:shade(-.12)}); Object.assign($("vsR").style,{width:D+"px",background:shade(-.28)});
+  st.style.perspectiveOrigin=`${cx}px ${cy}px`; st.style.perspective=Math.round(Math.max(W,H)*(room?4:2.2))+"px";
+  vGeo={k:room?.45:Math.min(1,Math.max(.4,W/300)),museum,dark,glass:!!g.f,L};
+  $("vwSheen").style.background = museum ? "linear-gradient(to bottom, rgba(255,240,215,.55), rgba(255,240,215,0) 45%, rgba(0,0,0,.4))" : "none";
+  const lb=$("vwLabel"); lb.innerHTML=`<b>${a.title}</b>Audrey<br>Acrylic on canvas<br>${dimText(a)}`;
+  lb.style.display = room ? "none" : "";
+  if(wide){ lb.style.left=Math.min(cx+W/2+30,SW-185)+"px"; lb.style.top=(cy+H/2-lb.offsetHeight)+"px"; }
+  else { lb.style.left=(SW/2-85)+"px"; lb.style.top=Math.min(cy+H/2+24,SH-lb.offsetHeight-44)+"px"; }
+  vTilt();
+}
+function vTilt(){
+  const {rx,ry}=vcur, g=vGeo, k=g.k;
+  $("vwTilt").style.transform=`rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+  $("vwCast").style.boxShadow = g.museum
+    ? `${-ry*1.6*k}px ${(34+rx*1.2)*k}px ${50*k}px rgba(0,0,0,.8), 0 4px 8px rgba(0,0,0,.6)`
+    : `${-ry*1.4*k}px ${(16+rx*.8)*k}px ${28*k}px rgba(0,0,0,${g.dark?.45:.3}), 0 2px 4px rgba(0,0,0,.22)`;
+  $("vwGlare").style.background = g.glass
+    ? `radial-gradient(ellipse 70% 55% at ${50-ry*2.6}% ${35+rx*3}%, rgba(255,255,255,${.1+Math.min(.22,Math.abs(ry)/60)}), rgba(255,255,255,0) 70%)` : "none";
+}
+function vLoop(t){
+  if(!$("vw").classList.contains("open")){ vRunning=false; return; }
+  if(!vInter){ vtgt.ry=Math.sin(t/1800)*13; vtgt.rx=Math.sin(t/2700)*4; }
+  vcur.rx+=(vtgt.rx-vcur.rx)*.09; vcur.ry+=(vtgt.ry-vcur.ry)*.09; vTilt(); requestAnimationFrame(vLoop);
+}
+function vAim(e){ const r=$("vwStage").getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+  vtgt.rx=Math.max(-18,Math.min(18,-y*36)); vtgt.ry=Math.max(-26,Math.min(26,x*52)); $("vwHint").style.opacity=0; }
+(()=>{ const st=$("vwStage");
+  st.addEventListener("pointerdown",e=>{ if(e.target.closest("button")) return; vDown=true; vInter=true; try{st.setPointerCapture(e.pointerId)}catch(_){} vAim(e); });
+  st.addEventListener("pointermove",e=>{ if(e.pointerType==="mouse"){vInter=true; vAim(e);} else if(vDown) vAim(e); });
+  const rel=e=>{ vDown=false; if(e.pointerType!=="mouse") vInter=false; };
+  st.addEventListener("pointerup",rel); st.addEventListener("pointercancel",rel);
+  st.addEventListener("pointerleave",e=>{ if(e.pointerType==="mouse") vInter=false; });
+  new ResizeObserver(()=>{ if(vArt && $("vw").classList.contains("open")) vRender(); }).observe(st);
+})();
+function openViewer(a){
+  vArt=a; if(a.round){ V.frame="none"; V.mat="none"; if(V.mode==="shadow") V.mode="gallery"; }
+  $("vwTitle").textContent=a.title; $("vw").classList.add("open"); document.body.style.overflow="hidden";
+  $("vwHint").style.opacity=1; vUI(); requestAnimationFrame(()=>{ vRender(); if(!vRunning){ vRunning=true; requestAnimationFrame(vLoop);} });
+}
+function closeViewer(){ $("vw").classList.remove("open"); if(!$("lb").classList.contains("open")) document.body.style.overflow=""; }
+$("vwX").onclick=closeViewer;
+$("vwAR").onclick=()=>openAR(vArt);
+
+/* ================= AR: true-scale 3D model built in the browser ================= */
+const IN=0.0254;
+const FRAME_MAT={black:["#1b1b1b",0,.45], white:["#ece9e2",0,.6], oak:["#c49a5e",0,.7], walnut:["#5a3a24",0,.55], gold:["#c9a24f",.85,.35]};
+const lin=h=>[1,3,5].map(i=>Math.pow(parseInt(h.substr(i,2),16)/255,2.2));
+function boxGeo(x0,x1,y0,y1,z0,z1){
+  const P=[],N=[],U=[],I=[];
+  const faces=[[[0,0,1],[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]]],[[0,0,-1],[[x1,y0,z0],[x0,y0,z0],[x0,y1,z0],[x1,y1,z0]]],
+    [[1,0,0],[[x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1]]],[[-1,0,0],[[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]]],
+    [[0,1,0],[[x0,y1,z1],[x1,y1,z1],[x1,y1,z0],[x0,y1,z0]]],[[0,-1,0],[[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]]]];
+  faces.forEach(([n,vs],f)=>{ vs.forEach(v=>{P.push(...v); N.push(...n); U.push((v[0]-x0)/(x1-x0||1),(y1-v[1])/(y1-y0||1));}); const b=f*4; I.push(b,b+1,b+2,b,b+2,b+3); });
+  return {P,N,U,I};
+}
+function discGeo(r,z0,z1,n=72){ // round canvas: textured front, painted edge, plain back
+  const P=[],N=[],U=[],I=[], k=.995;
+  P.push(0,0,z1); N.push(0,0,1); U.push(.5,.5);
+  for(let i=0;i<=n;i++){const a=i/n*2*Math.PI, c=Math.cos(a), s=Math.sin(a); P.push(r*c,r*s,z1); N.push(0,0,1); U.push(.5+.5*k*c,.5-.5*k*s);}
+  for(let i=1;i<=n;i++) I.push(0,i,i+1);
+  let b=P.length/3; P.push(0,0,z0); N.push(0,0,-1); U.push(.5,.5);
+  for(let i=0;i<=n;i++){const a=i/n*2*Math.PI, c=Math.cos(a), s=Math.sin(a); P.push(r*c,r*s,z0); N.push(0,0,-1); U.push(.5+.5*k*c,.5-.5*k*s);}
+  for(let i=1;i<=n;i++) I.push(b,b+i+1,b+i);
+  for(let i=0;i<n;i++){ const a0=i/n*2*Math.PI, a1=(i+1)/n*2*Math.PI, q=P.length/3;
+    [[a0,z0],[a1,z0],[a1,z1],[a0,z1]].forEach(([a,z])=>{const c=Math.cos(a), s=Math.sin(a); P.push(r*c,r*s,z); N.push(c,s,0); U.push(.5+.5*k*c,.5-.5*k*s);});
+    I.push(q,q+1,q+2,q,q+2,q+3); }
+  return {P,N,U,I};
+}
+function mergeGeo(list){const o={P:[],N:[],U:[],I:[]}; list.forEach(g=>{const off=o.P.length/3; o.P.push(...g.P); o.N.push(...g.N); o.U.push(...g.U); o.I.push(...g.I.map(i=>i+off));}); return o;}
+function buildGLB(a, jpeg){
+  const g=vGeom(a), w=a.w*IN, h=a.h*IN, f=g.f*IN, m=g.m*IN, D=g.d*IN, W=w+2*(m+f), H=h+2*(m+f);
+  const prims=[], materials=[];
+  const addMat=o=>{materials.push(o); return materials.length-1;};
+  const artMat=addMat({name:"painting",pbrMetallicRoughness:{baseColorTexture:{index:0},metallicFactor:0,roughnessFactor:.9}});
+  if(g.round){ prims.push({geo:discGeo(w/2,0,D),mat:artMat}); }
+  else if(!f){ prims.push({geo:boxGeo(-w/2,w/2,-h/2,h/2,0,D),mat:artMat}); }
+  else {
+    const [col,met,rough]=FRAME_MAT[V.frame];
+    const fm=addMat({name:"frame",pbrMetallicRoughness:{baseColorFactor:[...lin(col),1],metallicFactor:met,roughnessFactor:rough}});
+    prims.push({geo:mergeGeo([boxGeo(-W/2,W/2,H/2-f,H/2,0,D),boxGeo(-W/2,W/2,-H/2,-H/2+f,0,D),boxGeo(-W/2,-W/2+f,-H/2+f,H/2-f,0,D),boxGeo(W/2-f,W/2,-H/2+f,H/2-f,0,D)]),mat:fm});
+    const artZ=D*(g.shadow?.35:.55), backZ=artZ-0.0008;
+    const matHex = g.shadow&&V.mat==="none" ? "#e9e4da" : ((V_MATS.find(x=>x[0]===V.mat)||[])[2]||"#d8d4cc");
+    const mm=addMat({name:"mat",pbrMetallicRoughness:{baseColorFactor:[...lin(matHex),1],metallicFactor:0,roughnessFactor:.95}});
+    prims.push({geo:boxGeo(-W/2+f,W/2-f,-H/2+f,H/2-f,0,backZ),mat:mm});
+    const ab=g.shadow?backZ+0.004:backZ;
+    prims.push({geo:boxGeo(-w/2,w/2,-h/2,h/2,ab,Math.max(artZ,ab+0.0008)),mat:artMat});
+  }
+  const chunks=[], views=[], accessors=[]; let off=0;
+  const add=(arr,target)=>{const by=new Uint8Array(arr.buffer); const pad=(4-by.length%4)%4;
+    views.push(Object.assign({buffer:0,byteOffset:off,byteLength:by.length},target?{target}:{})); chunks.push(by); if(pad) chunks.push(new Uint8Array(pad)); off+=by.length+pad; return views.length-1;};
+  const meshPrims=prims.map(p=>{
+    const P=new Float32Array(p.geo.P), N=new Float32Array(p.geo.N), U=new Float32Array(p.geo.U), I=new Uint32Array(p.geo.I);
+    const mn=[Infinity,Infinity,Infinity], mx=[-Infinity,-Infinity,-Infinity];
+    for(let i=0;i<P.length;i+=3) for(let k=0;k<3;k++){mn[k]=Math.min(mn[k],P[i+k]); mx[k]=Math.max(mx[k],P[i+k]);}
+    const b=accessors.length;
+    accessors.push({bufferView:add(P,34962),componentType:5126,count:P.length/3,type:"VEC3",min:mn,max:mx});
+    accessors.push({bufferView:add(N,34962),componentType:5126,count:N.length/3,type:"VEC3"});
+    accessors.push({bufferView:add(U,34962),componentType:5126,count:U.length/2,type:"VEC2"});
+    accessors.push({bufferView:add(I,34963),componentType:5125,count:I.length,type:"SCALAR"});
+    return {attributes:{POSITION:b,NORMAL:b+1,TEXCOORD_0:b+2},indices:b+3,material:p.mat};
+  });
+  const iv=add(jpeg);
+  const json={asset:{version:"2.0",generator:"audrey-paintings"},scene:0,scenes:[{nodes:[0]}],nodes:[{mesh:0,name:a.title}],meshes:[{primitives:meshPrims}],materials,
+    textures:[{source:0,sampler:0}],samplers:[{magFilter:9729,minFilter:9987,wrapS:33071,wrapT:33071}],images:[{bufferView:iv,mimeType:"image/jpeg"}],
+    accessors,bufferViews:views,buffers:[{byteLength:off}]};
+  let js=new TextEncoder().encode(JSON.stringify(json)); const jp=(4-js.length%4)%4;
+  if(jp){const t=new Uint8Array(js.length+jp); t.set(js); t.fill(0x20,js.length); js=t;}
+  const total=28+js.length+off, out=new Uint8Array(total), dv=new DataView(out.buffer);
+  dv.setUint32(0,0x46546C67,true); dv.setUint32(4,2,true); dv.setUint32(8,total,true);
+  dv.setUint32(12,js.length,true); dv.setUint32(16,0x4E4F534A,true); out.set(js,20);
+  let p=20+js.length; dv.setUint32(p,off,true); dv.setUint32(p+4,0x004E4942,true); p+=8; chunks.forEach(c=>{out.set(c,p); p+=c.length;});
+  return out;
+}
+function paintingJpeg(a){ // draw the painting to a canvas and export JPEG bytes for the 3D texture
+  return new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>{
+    const s=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight)), c=document.createElement("canvas");
+    c.width=Math.round(im.naturalWidth*s); c.height=Math.round(im.naturalHeight*s);
+    const x=c.getContext("2d"); x.fillStyle=a.edge||"#7a9a6a"; x.fillRect(0,0,c.width,c.height); x.drawImage(im,0,0,c.width,c.height);
+    const b=atob(c.toDataURL("image/jpeg",.88).split(",")[1]), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); res(u);
+  }; im.onerror=rej; im.src=src(a); });
+}
+let glbUrl=null;
+async function openAR(a){
+  const g=vGeom(a); $("arTitle").textContent=a.title; $("ar").classList.add("open");
+  const look = g.round ? "Round canvas" : (g.f ? `${V_FRAMES.find(x=>x[0]===V.frame)[1]} frame${V.mat!=="none"?", "+V.mat+" mat":""}` : "Unframed canvas");
+  $("arFoot").innerHTML=`<b>${dimText(a)}</b> · ${look}. Drag to turn it.<span id="arMsg"></span>`;
+  try{
+    const glb=buildGLB(a, await paintingJpeg(a));
+    if(glbUrl) URL.revokeObjectURL(glbUrl); glbUrl=URL.createObjectURL(new Blob([glb],{type:"model/gltf-binary"}));
+    const mv=$("mv"); mv.setAttribute("src",glbUrl);
+    if(!customElements.get("model-viewer")) $("arMsg").innerHTML="<br>Loading the 3D viewer…";
+    mv.addEventListener("load",()=>{ $("arMsg").innerHTML = mv.canActivateAR
+      ? "<br>Tap <b>Place on my wall</b>, then slowly pan your camera across the wall until the painting snaps to it."
+      : "<br>To see it on your wall, open this page on your phone and tap <b>View on your wall</b>."; },{once:true});
+  }catch(e){ $("arMsg").innerHTML="<br>Couldn't build the 3D preview for this painting. Try again in a moment."; }
+}
+$("arX").onclick=()=>$("ar").classList.remove("open");
+</script>
+</body>
+</html>
