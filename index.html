@@ -280,8 +280,8 @@ model-viewer:not(:defined) .ar-place{display:none}
     <div class="shop">
       <div class="panel">
         <span class="tag">Prints</span>
-        <h3>Fine art prints</h3>
-        <p>Printed on heavyweight matte paper with archival inks, signed by Audrey.</p>
+        <h3>Art &amp; canvas prints</h3>
+        <p>Archival art prints on heavyweight matte paper, or stretched canvas prints ready to hang.</p>
         <ul class="price-list" id="printPrices"></ul>
         <a class="btn" href="#gallery">Choose a painting</a>
       </div>
@@ -290,9 +290,10 @@ model-viewer:not(:defined) .ar-place{display:none}
         <h3>The painting itself</h3>
         <p>Own the canvas Audrey painted. Each original ships wrapped and signed on the back.</p>
         <ul class="price-list">
-          <li><span>Minis (about 3–4 in)</span><b>Inquire</b></li>
-          <li><span>Small (5×7 to 8×10 in)</span><b>Inquire</b></li>
-          <li><span>Large canvases</span><b>Inquire</b></li>
+          <li><span>Minis, 4×4 in</span><b>$55</b></li>
+          <li><span>Small, up to 5×7 in</span><b>$70–80</b></li>
+          <li><span>Medium, 9×12 to 11×14 in</span><b>$145–170</b></li>
+          <li><span>Large, 22×28 in</span><b>$340</b></li>
         </ul>
         <a class="btn ghost" href="#contact" data-inquire="an original painting">Ask about an original</a>
       </div>
@@ -394,7 +395,7 @@ model-viewer:not(:defined) .ar-place{display:none}
     <button class="btn" id="lbAR">View on your wall</button>
     <button class="btn ghost" id="lbView">Preview in a frame</button>
     <button class="btn" id="lbBuy">Order this print</button>
-    <button class="btn ghost" id="lbOrig">Ask about the original</button>
+    <button class="btn ghost" id="lbOrig">Buy the original</button>
     <p class="form-note" id="lbNote"></p>
   </aside>
 </div>
@@ -440,8 +441,10 @@ model-viewer:not(:defined) .ar-place{display:none}
 
 <script>
 /* ---------- edit paintings here ---------- */
-const PRINTS=[["5×7 in","$25"],["8×10 in","$40"],["11×14 in","$65"]];
-const COMMISSIONS=[["Mini, about 4×4 in","from $60"],["8×10 in","from $150"],["Round, 10 in","from $175"],["16×20 in","from $350"]];
+// Pricing anchored to a sold original: 22×28 in sold for $340, about $6.80 per "united inch" (width + height).
+const RATE=6.8, MIN_ORIGINAL=55;
+const PRINTS=[["Art print 8×10 in","$40"],["Art print 11×14 in","$65"],["Art print 16×20 in","$95"],["Canvas print 12×16 in","$125"],["Canvas print 16×20 in","$165"]];
+const COMMISSIONS=[["Mini, 4×4 in","from $75"],["8×10 in","from $175"],["Round, 10 in","from $195"],["16×20 in","from $325"],["22×28 in","from $425"]];
 const ART=[
  {id:"pink-cockatoo", title:"Pink Cockatoo", cat:["birds"], w:22, h:28, depth:0.75, edge:"#8fb0cf", desc:"A Major Mitchell's-style cockatoo glowing coral and pink against a cloudy blue sky."},
  {id:"white-cockatoo", title:"Cockatoo in Green", sold:true, cat:["birds"], w:22, h:28, depth:0.75, edge:"#5f8c4f", desc:"Soft white plumage with a pink crest and lilac wings, set against a dappled green."},
@@ -458,6 +461,7 @@ const ART=[
  {id:"golden-wave", title:"Golden Wave", cat:["landscapes","water","minis"], w:4, h:4, depth:0.15, edge:"#c9a25a", desc:"A turquoise wave curling onto the sand at sunset."},
  {id:"sunflower-meadow", title:"Sunflower Meadow", cat:["landscapes","minis"], w:4, h:4, depth:0.15, edge:"#6aa04a", desc:"Wild sunflowers below a mountain under a lavender-and-gold sky."}
 ];
+const origPrice=a=>a.price||"$"+Math.max(MIN_ORIGINAL,Math.round((a.round?a.w*2:a.w+a.h)*RATE/5)*5);
 const dimText=a=>a.round?`${a.w} in round (approx.)`:`${a.w} × ${a.h} in (approx.)`;
 const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[419,361],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
 const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","Pets"],["water","Water"],["landscapes","Landscapes"],["minis","Minis"]];
@@ -490,7 +494,7 @@ function openLB(i){
   const im=$("lbImg"); im.src=src(a); im.alt=a.desc; im.className=a.round?"round":"";
   $("lbTag").textContent=a.cat.map(c=>FILTERS.find(f=>f[0]===c)[1]).join(" · ");
   $("lbTitle").textContent=a.title; $("lbDesc").textContent=a.desc;
-  $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd><dt>Original</dt><dd>${a.sold?"Sold · prints available":"Ask for availability"}</dd>`;
+  $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd><dt>Original</dt><dd>${a.sold?"Sold · prints available":origPrice(a)}</dd>`;
   $("lbOrig").style.display=a.sold?"none":"";
   $("lbPrint").innerHTML=PRINTS.map(([s,p])=>`<option>${s} · ${p}</option>`).join("");
   $("lbNote").textContent="";
@@ -505,7 +509,7 @@ $("lb").addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.change
 $("lbBuy").onclick=()=>{ const a=shown[idx]; $("lbNote").textContent=`Checkout isn't connected yet. For now, email ${EMAIL} to order "${a.title}" as a ${$("lbPrint").value.split(" · ")[0]} print.`; };
 $("lbAR").onclick=()=>{ V.frame="none"; V.mat="none"; V.mode="gallery"; openAR(shown[idx]); };
 $("lbView").onclick=()=>openViewer(shown[idx]);
-$("lbOrig").onclick=()=>{ const a=shown[idx]; closeLB(); prefill(`the original "${a.title}"`); };
+$("lbOrig").onclick=()=>{ const a=shown[idx]; closeLB(); prefill(`buying the original "${a.title}" (${origPrice(a)})`); };
 
 function prefill(what){
   $("cSubject").value=""; $("cMsg").value=`Hi Audrey, I'm interested in ${what}.`;
