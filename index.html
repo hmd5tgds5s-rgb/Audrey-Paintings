@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Audrey Paintings</title>
 <meta name="description" content="Original acrylic paintings of birds, wildlife, pets and landscapes by Audrey. Prints, originals and commissioned pet portraits.">
+<meta name="theme-color" content="#a3b391">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Audrey Paintings">
+<meta property="og:title" content="Audrey Paintings: birds, wildlife and pet portraits">
+<meta property="og:description" content="Original acrylic paintings, art and canvas prints, and commissioned pet portraits.">
+<meta property="og:url" content="https://audrey-paintings.vercel.app/">
+<meta property="og:image" content="https://audrey-paintings.vercel.app/art/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://audrey-paintings.vercel.app/art/share.jpg">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,6 +99,13 @@ section{padding:64px 0}
 .card .s{font-size:13px; color:var(--muted); white-space:nowrap}
 @media (max-width:600px){ .grid{columns:2; column-gap:12px} .card{margin-bottom:16px} .card .mat{padding:7px} .card .t{font-size:16px} .card .s{display:none} }
 .sold{font:600 11px var(--body); letter-spacing:.06em; text-transform:uppercase; color:var(--paper); background:var(--plum); padding:2px 7px; border-radius:999px; vertical-align:3px; margin-left:4px}
+.faq-list{display:grid; gap:10px; max-width:820px}
+.faq details{background:var(--paper); padding:0 20px; box-shadow:0 4px 14px rgba(36,48,31,.1)}
+.faq summary{cursor:pointer; list-style:none; padding:17px 30px 17px 0; position:relative; font-weight:600; font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+"; position:absolute; right:0; top:12px; font:400 26px var(--display); color:var(--plum)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin:0 0 18px; color:var(--muted); max-width:65ch}
 .tag{display:inline-block; font-size:11.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--plum)}
 
 /* shop */
@@ -233,6 +253,7 @@ model-viewer:not(:defined) .ar-place{display:none}
       <a href="#shop">Shop</a>
       <a href="#commissions">Commissions</a>
       <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -362,7 +383,22 @@ model-viewer:not(:defined) .ar-place{display:none}
   </div>
 </section>
 
-<section id="contact">
+<section id="faq">
+  <div class="wrap faq">
+    <div class="sec-head"><div><h2>Questions</h2><p>Commissions, shipping, returns and care.</p></div></div>
+    <div class="faq-list">
+      <details><summary>How long does a commission take?</summary><p>Most portraits take two to four weeks once you approve the sketch. Larger canvases can take longer. Audrey confirms the timeline with your quote.</p></details>
+      <details><summary>How do I pay for a commission?</summary><p>A 50% deposit reserves your spot and the balance is due before your painting ships. If the sketch isn't right, Audrey revises it before any paint goes on canvas.</p></details>
+      <details><summary>Do originals come ready to hang?</summary><p>Stretched canvases arrive ready to hang with painted edges, so they look finished without a frame. Small canvas panels and minis look best in a small frame or on a tabletop easel.</p></details>
+      <details><summary>How are prints made?</summary><p>Prints are made to order by a professional print studio on archival matte paper or stretched canvas, then shipped straight to you. Art prints arrive unframed. Colors can look slightly different on screens than in person.</p></details>
+      <details><summary>How long does shipping take?</summary><p>Originals are wrapped carefully and shipped with tracking within a few business days. Prints are made to order and usually arrive within one to two weeks. Audrey ships within the US for now.</p></details>
+      <details><summary>What's your return policy?</summary><p>If a print arrives damaged or misprinted, email a photo within 14 days and it will be replaced free. Originals can be returned within 14 days in their original condition; return shipping is paid by the buyer. Commissions are custom and can't be returned, which is why you approve the sketch first.</p></details>
+      <details><summary>How do I care for my painting?</summary><p>Hang it out of direct sunlight and away from humid spots like bathrooms. Dust gently with a soft, dry cloth. No water or cleaners needed.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="band">
   <div class="wrap" style="max-width:720px">
     <h2 style="font-size:clamp(32px,4.4vw,48px); margin-bottom:12px">Say hello</h2>
     <p style="color:var(--muted)">Questions about a painting, a print order or a commission? Email Audrey at <a href="mailto:hello@audreypaints.com">hello@audreypaints.com</a> (hello@audreypaints.com) or follow new work on Instagram at <a href="https://instagram.com/">@audreypaints</a>.</p>
@@ -464,8 +500,10 @@ const ART=[
 const origPrice=a=>a.price||"$"+Math.max(MIN_ORIGINAL,Math.round((a.round?a.w*2:a.w+a.h)*RATE/5)*5);
 const dimText=a=>a.round?`${a.w} in round (approx.)`:`${a.w} × ${a.h} in (approx.)`;
 const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[419,361],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
-const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","Pets"],["water","Water"],["landscapes","Landscapes"],["minis","Minis"]];
+const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","Pets"],["water","Water"],["landscapes","Landscapes"],["minis","Minis"],["sold","Collected"]];
 const EMAIL="hello@audreypaints.com";
+// Paste a Formspree form URL here (https://formspree.io/f/xxxxxxx) to have requests emailed to Audrey.
+const FORM_ENDPOINT="";
 
 const $=id=>document.getElementById(id);
 const src=(a,thumb)=>`art/${thumb?"thumb/":""}${a.id}.${a.id==="dachshund"?"webp":"jpg"}`;
@@ -479,7 +517,7 @@ function renderFilters(){
   });
 }
 function renderGrid(){
-  shown = filter==="all" ? ART : ART.filter(a=>a.cat.includes(filter));
+  shown = filter==="all" ? ART : filter==="sold" ? ART.filter(a=>a.sold) : ART.filter(a=>a.cat.includes(filter));
   const g=$("grid"); g.innerHTML="";
   shown.forEach((a,i)=>{
     const [w,h]=DIMS[a.id], tw=Math.min(720,w), th=Math.round(h*tw/w);
@@ -525,7 +563,13 @@ $("commForm").addEventListener("submit",e=>{
   const n=$("cName").value.trim(), em=$("cEmail").value.trim();
   const s=$("sent"); s.style.display="block";
   if(!n||!/^\S+@\S+\.\S+$/.test(em)){ s.textContent="Please add your name and a valid email so Audrey can reply."; return; }
-  s.textContent=`Thanks, ${n.split(" ")[0]}! This form isn't connected to email yet, so nothing was sent. Until it is, please email ${EMAIL} with your request and photos.`;
+  if(!FORM_ENDPOINT){ s.textContent=`Thanks, ${n.split(" ")[0]}! This form isn't connected to email yet, so nothing was sent. Until it is, please email ${EMAIL} with your request and photos.`; return; }
+  const btn=e.target.querySelector("button[type=submit]"); btn.disabled=true; s.textContent="Sending…";
+  const data=new FormData(e.target); data.append("_subject",`Commission request from ${n}`);
+  fetch(FORM_ENDPOINT,{method:"POST",body:data,headers:{Accept:"application/json"}})
+    .then(r=>{ if(!r.ok) throw 0; s.textContent=`Thanks, ${n.split(" ")[0]}! Your request was sent. Audrey will reply to ${em} within a few days.`; e.target.reset(); })
+    .catch(()=>{ s.textContent=`Sorry, that didn't go through. Please try again, or email ${EMAIL} directly.`; })
+    .finally(()=>{ btn.disabled=false; });
 });
 
 const mb=$("menuBtn"); mb.onclick=()=>{ const o=$("links").classList.toggle("open"); mb.setAttribute("aria-expanded",o); };
