@@ -144,6 +144,8 @@ textarea{min-height:110px; resize:vertical}
 @media (max-width:820px){ .about{grid-template-columns:1fr} }
 .about .portrait{background:var(--sage-pale); aspect-ratio:4/5; display:grid; place-items:center; color:var(--muted); font-size:14px; text-align:center; padding:20px; border:2px dashed rgba(36,48,31,.25)}
 .about p{max-width:60ch}
+.portrait-img{width:100%; aspect-ratio:4/5; object-fit:cover; background:var(--paper); padding:12px; box-shadow:0 2px 4px rgba(36,48,31,.12), 0 18px 40px rgba(36,48,31,.24); transform:rotate(-1deg)}
+@media (max-width:820px){ .portrait-img{max-width:420px; margin-inline:auto} }
 
 footer{background:var(--sage-deep); padding:34px 0; font-size:14.5px}
 footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
@@ -374,7 +376,7 @@ model-viewer:not(:defined) .ar-place{display:none}
 
 <section id="about" class="band">
   <div class="wrap about">
-    <div class="portrait">Photo of Audrey at her easel goes here</div>
+    <img class="portrait-img" src="art/audrey.jpg" alt="Audrey smiling and hugging her dachshund in her kitchen" width="960" height="1200" loading="lazy">
     <div>
       <h2 style="font-size:clamp(32px,4.4vw,48px); margin-bottom:16px">About Audrey</h2>
       <p>Audrey paints animals with personality: a cockatoo mid-ruffle, a fawn tucked into the ferns, a frog sizing you up from the pond. She works in acrylic, building color in loose, layered strokes so every feather and ripple keeps the energy of the brush.</p>
