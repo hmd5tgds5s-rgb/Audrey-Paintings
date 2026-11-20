@@ -1,4 +1,4 @@
-# Audrey Paintings
+# Audrey Likes to Paint
 
 Portfolio and shop site for Audrey's original paintings: gallery, prints, originals and pet-portrait commissions, with a frame/lighting preview and "View on your wall" AR for every piece.
 

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Audrey Paintings</title>
+<title>Audrey Likes to Paint</title>
 <meta name="description" content="Original acrylic paintings of birds, wildlife, pets and landscapes by Audrey. Prints, originals and commissioned pet portraits.">
 <meta name="theme-color" content="#a3b391">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Audrey Paintings">
-<meta property="og:title" content="Audrey Paintings: birds, wildlife and pet portraits">
+<meta property="og:site_name" content="Audrey Likes to Paint">
+<meta property="og:title" content="Audrey Likes to Paint: birds, wildlife and pet portraits">
 <meta property="og:description" content="Original acrylic paintings, art and canvas prints, and commissioned pet portraits.">
 <meta property="og:url" content="https://audrey-paintings.vercel.app/">
 <meta property="og:image" content="https://audrey-paintings.vercel.app/art/share.jpg">
@@ -50,7 +50,7 @@ h1,h2,h3{font-family:var(--display); font-weight:400; line-height:1.1; text-wrap
 /* nav */
 .nav{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--sage) 88%,transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid rgba(36,48,31,.12)}
 .nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:62px}
-.brand{font-family:var(--display); font-size:26px; color:var(--ink); text-decoration:none; letter-spacing:.01em}
+.brand{font-family:var(--display); font-size:clamp(21px,5.6vw,26px); white-space:nowrap; color:var(--ink); text-decoration:none; letter-spacing:.01em}
 .links{display:flex; gap:22px; font-size:15px; font-weight:500}
 .links a{color:var(--ink); text-decoration:none}
 .links a:hover{color:var(--plum)}
@@ -246,7 +246,7 @@ model-viewer:not(:defined) .ar-place{display:none}
 
 <nav class="nav" aria-label="Main">
   <div class="wrap">
-    <a class="brand" href="#top">Audrey</a>
+    <a class="brand" href="#top">Audrey Likes to Paint</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links">Menu</button>
     <div class="links" id="links">
       <a href="#gallery">Gallery</a>
@@ -407,7 +407,7 @@ model-viewer:not(:defined) .ar-place{display:none}
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr"></span> Audrey. All paintings and images are the artist's own.</span>
+    <span>© <span id="yr"></span> Audrey Likes to Paint. All paintings and images are the artist's own.</span>
     <span><a href="https://www.instagram.com/audreylikestopaint/" style="color:var(--ink)">Instagram @audreylikestopaint</a> · <a href="#top" style="color:var(--ink)">Back to top</a></span>
   </div>
 </footer>
