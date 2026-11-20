@@ -302,7 +302,7 @@ model-viewer:not(:defined) .ar-place{display:none}
       <div class="panel">
         <span class="tag">Prints</span>
         <h3>Art &amp; canvas prints</h3>
-        <p>Archival art prints on heavyweight matte paper, or stretched canvas prints ready to hang.</p>
+        <p>Archival art prints on heavyweight matte paper. Stretched canvas prints, ready to hang, are available for larger paintings.</p>
         <ul class="price-list" id="printPrices"></ul>
         <a class="btn" href="#gallery">Choose a painting</a>
       </div>
@@ -311,10 +311,10 @@ model-viewer:not(:defined) .ar-place{display:none}
         <h3>The painting itself</h3>
         <p>Own the canvas Audrey painted. Each original ships wrapped and signed on the back.</p>
         <ul class="price-list">
-          <li><span>Minis, 4×4 in</span><b>$55</b></li>
-          <li><span>Small, up to 5×7 in</span><b>$70–80</b></li>
-          <li><span>Medium, 9×12 to 11×14 in</span><b>$145–170</b></li>
-          <li><span>Large, 22×28 in</span><b>$340</b></li>
+          <li><span>Minis, 4×4 in</span><b>$130</b></li>
+          <li><span>Small, 4×6 to 8×6 in</span><b>$160–225</b></li>
+          <li><span>Medium, 9×12 to 11×14 in</span><b>$320–400</b></li>
+          <li><span>Large, 16×20 to 22×28 in</span><b>$575–800</b></li>
         </ul>
         <a class="btn ghost" href="#contact" data-inquire="an original painting">Ask about an original</a>
       </div>
@@ -477,10 +477,13 @@ model-viewer:not(:defined) .ar-place{display:none}
 
 <script>
 /* ---------- edit paintings here ---------- */
-// Pricing anchored to a sold original: 22×28 in sold for $340, about $6.80 per "united inch" (width + height).
-const RATE=6.8, MIN_ORIGINAL=55;
-const PRINTS=[["Art print 8×10 in","$40"],["Art print 11×14 in","$65"],["Art print 16×20 in","$95"],["Canvas print 12×16 in","$125"],["Canvas print 16×20 in","$165"]];
-const COMMISSIONS=[["Mini, 4×4 in","from $75"],["8×10 in","from $175"],["Round, 10 in","from $195"],["16×20 in","from $325"],["22×28 in","from $425"]];
+// Originals: priced from the 22×28 in Pink Cockatoo at $800 = $16 per "united inch" (width + height), rounded to $5.
+const RATE=16, MIN_ORIGINAL=100;
+const PRINTS=[["Art print 8×10 in","$45"],["Art print 11×14 in","$70"],["Art print 16×20 in","$110"],["Canvas print 12×16 in","$175"],["Canvas print 16×20 in","$235"]];
+// Canvas prints are offered only for larger paintings, so a print never costs more than a small original.
+const printsFor=a=>PRINTS.filter(([s])=>!s.startsWith("Canvas")||a.w*a.h>=99);
+// Commissions: the original rate plus about 15% for custom work, sketch approval and revisions.
+const COMMISSIONS=[["Mini, 4×4 in","from $150"],["8×10 in","from $325"],["Round, 10 in","from $375"],["16×20 in","from $650"],["22×28 in","from $925"]];
 const ART=[
  {id:"pink-cockatoo", title:"Pink Cockatoo", cat:["birds"], w:22, h:28, depth:0.75, edge:"#8fb0cf", desc:"A Major Mitchell's-style cockatoo glowing coral and pink against a cloudy blue sky."},
  {id:"white-cockatoo", title:"Cockatoo in Green", sold:true, cat:["birds"], w:22, h:28, depth:0.75, edge:"#5f8c4f", desc:"Soft white plumage with a pink crest and lilac wings, set against a dappled green."},
@@ -536,7 +539,7 @@ function openLB(i){
   $("lbTitle").textContent=a.title; $("lbDesc").textContent=a.desc;
   $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd><dt>Original</dt><dd>${a.sold?"Sold · prints available":origPrice(a)}</dd>`;
   $("lbOrig").style.display=a.sold?"none":"";
-  $("lbPrint").innerHTML=PRINTS.map(([s,p])=>`<option>${s} · ${p}</option>`).join("");
+  $("lbPrint").innerHTML=printsFor(a).map(([s,p])=>`<option>${s} · ${p}</option>`).join("");
   $("lbNote").textContent="";
   $("lb").classList.add("open"); document.body.style.overflow="hidden"; $("lbX").focus();
 }
