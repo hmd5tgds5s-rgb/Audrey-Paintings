@@ -311,7 +311,7 @@ model-viewer:not(:defined) .ar-place{display:none}
         <h3>The painting itself</h3>
         <p>Own the canvas Audrey painted. Each original ships wrapped and signed on the back.</p>
         <ul class="price-list">
-          <li><span>Minis, 4×4 in</span><b>$130</b></li>
+          <li><span>Minis, 4×4 in</span><b>$85</b></li>
           <li><span>Small, 4×6 to 8×6 in</span><b>$160–225</b></li>
           <li><span>Medium, 9×12 to 11×14 in</span><b>$320–400</b></li>
           <li><span>Large, 16×20 to 22×28 in</span><b>$575–800</b></li>
@@ -479,11 +479,13 @@ model-viewer:not(:defined) .ar-place{display:none}
 /* ---------- edit paintings here ---------- */
 // Originals: priced from the 22×28 in Pink Cockatoo at $800 = $16 per "united inch" (width + height), rounded to $5.
 const RATE=16, MIN_ORIGINAL=100;
+// Minis (about 4×4 in) sell at a flat, lower price instead of the per-inch rate.
+const MINI_PRICE="$85";
 const PRINTS=[["Art print 8×10 in","$45"],["Art print 11×14 in","$70"],["Art print 16×20 in","$110"],["Canvas print 12×16 in","$175"],["Canvas print 16×20 in","$235"]];
 // Canvas prints are offered only for larger paintings, so a print never costs more than a small original.
 const printsFor=a=>PRINTS.filter(([s])=>!s.startsWith("Canvas")||a.w*a.h>=99);
 // Commissions: the original rate plus about 15% for custom work, sketch approval and revisions.
-const COMMISSIONS=[["Mini, 4×4 in","from $150"],["8×10 in","from $325"],["Round, 10 in","from $375"],["16×20 in","from $650"],["22×28 in","from $925"]];
+const COMMISSIONS=[["Mini, 4×4 in","from $100"],["8×10 in","from $325"],["Round, 10 in","from $375"],["16×20 in","from $650"],["22×28 in","from $925"]];
 const ART=[
  {id:"pink-cockatoo", title:"Pink Cockatoo", cat:["birds"], w:22, h:28, depth:0.75, edge:"#8fb0cf", desc:"A Major Mitchell's-style cockatoo glowing coral and pink against a cloudy blue sky."},
  {id:"white-cockatoo", title:"Cockatoo in Green", sold:true, cat:["birds"], w:22, h:28, depth:0.75, edge:"#5f8c4f", desc:"Soft white plumage with a pink crest and lilac wings, set against a dappled green."},
@@ -502,7 +504,7 @@ const ART=[
  {id:"golden-wave", title:"Golden Wave", cat:["landscapes","water","minis"], w:4, h:4, depth:0.15, edge:"#c9a25a", desc:"A turquoise wave curling onto the sand at sunset."},
  {id:"sunflower-meadow", title:"Sunflower Meadow", cat:["landscapes","minis"], w:4, h:4, depth:0.15, edge:"#6aa04a", desc:"Wild sunflowers below a mountain under a lavender-and-gold sky."}
 ];
-const origPrice=a=>a.price||"$"+Math.max(MIN_ORIGINAL,Math.round((a.round?a.w*2:a.w+a.h)*RATE/5)*5);
+const origPrice=a=>a.price||(a.cat.includes("minis")?MINI_PRICE:null)||"$"+Math.max(MIN_ORIGINAL,Math.round((a.round?a.w*2:a.w+a.h)*RATE/5)*5);
 const dimText=a=>a.round?`${a.w} in round (approx.)`:`${a.w} × ${a.h} in (approx.)`;
 const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[1422,1011],"longhorn-pond":[1600,1257],"hummingbird-garden":[1600,1200],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
 const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","Pets"],["water","Water"],["landscapes","Landscapes"],["minis","Minis"],["sold","Collected"]];
