@@ -485,11 +485,13 @@ const ART=[
  {id:"pink-cockatoo", title:"Pink Cockatoo", cat:["birds"], w:22, h:28, depth:0.75, edge:"#8fb0cf", desc:"A Major Mitchell's-style cockatoo glowing coral and pink against a cloudy blue sky."},
  {id:"white-cockatoo", title:"Cockatoo in Green", sold:true, cat:["birds"], w:22, h:28, depth:0.75, edge:"#5f8c4f", desc:"Soft white plumage with a pink crest and lilac wings, set against a dappled green."},
  {id:"fawn", title:"Fawn in the Ferns", cat:["wildlife"], w:6, h:4, depth:0.15, edge:"#3f6b35", desc:"A spotted fawn peeking out from a tangle of leaves and tall grass."},
+ {id:"longhorn-pond", title:"Longhorn Family by the Pond", cat:["wildlife","landscapes","water"], w:20, h:16, depth:.75, edge:"#7fa84a", desc:"A Texas longhorn and two calves grazing beside a pond on a bright summer day."},
  {id:"moonlit-swan", title:"Moonlit Swan", cat:["birds","water"], w:11, h:14, depth:0.75, edge:"#141a1c", desc:"A swan gliding across a dark pond under a full moon, ripples catching the light."},
  {id:"duckling", title:"Duckling Among the Lily Pads", cat:["birds","water"], w:4, h:6, depth:0.15, edge:"#3e7fa0", desc:"A fluffy yellow duckling paddling through reflections and lily pads."},
  {id:"wild-horse", title:"Wild Horse", cat:["wildlife","landscapes"], w:14, h:11, depth:0.75, edge:"#e8b960", desc:"A grey horse with a dark mane standing in a meadow of pink and gold hills."},
  {id:"fox", title:"Red Fox in Snow", cat:["wildlife"], w:5, h:7, depth:0.15, edge:"#2c3a4c", desc:"A red fox standing alert in a snowy night meadow."},
- {id:"hummingbird", title:"Hummingbird", cat:["birds"], w:6, h:5, depth:0.15, edge:"#7a4a7a", desc:"An emerald hummingbird mid-flight against a sunset sky."},
+ {id:"hummingbird", title:"Hummingbird", cat:["birds"], w:7, h:5, depth:0.15, edge:"#7a4a7a", desc:"An iridescent hummingbird mid-flight against a pink, gold and violet sunset sky."},
+ {id:"hummingbird-garden", title:"Hummingbird in the Garden", cat:["birds"], w:8, h:6, depth:.15, edge:"#2f5a5a", desc:"A lilac-and-green hummingbird hovering beside pink, orange and purple wildflowers."},
  {id:"longhorn", title:"Longhorn in the Shade", cat:["wildlife","landscapes"], w:12, h:9, depth:0.75, edge:"#d9c37a", desc:"A Texas longhorn resting beneath an oak on a golden summer afternoon."},
  {id:"dachshund", title:"Dachshund Portrait", cat:["pets"], w:10, h:10, depth:0.6, edge:"#3f7a3a", round:true, desc:"A red dachshund looking up from the grass, painted on a round canvas."},
  {id:"frog", title:"Pond Frog", cat:["wildlife","water","minis"], w:4, h:4, depth:0.6, edge:"#2d4a6a", desc:"A wide-eyed green frog peering up from the pond."},
@@ -499,7 +501,7 @@ const ART=[
 ];
 const origPrice=a=>a.price||"$"+Math.max(MIN_ORIGINAL,Math.round((a.round?a.w*2:a.w+a.h)*RATE/5)*5);
 const dimText=a=>a.round?`${a.w} in round (approx.)`:`${a.w} × ${a.h} in (approx.)`;
-const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[419,361],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
+const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[1422,1011],"longhorn-pond":[1600,1257],"hummingbird-garden":[1600,1200],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
 const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","Pets"],["water","Water"],["landscapes","Landscapes"],["minis","Minis"],["sold","Collected"]];
 const EMAIL="hello@audreypaints.com";
 // Paste a Formspree form URL here (https://formspree.io/f/xxxxxxx) to have requests emailed to Audrey.
