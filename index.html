@@ -18,6 +18,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://audrey-paintings.vercel.app/art/share.jpg">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -791,7 +792,23 @@ function paintingJpeg(a){ // draw the painting to a canvas and export JPEG bytes
     const b=atob(c.toDataURL("image/jpeg",.88).split(",")[1]), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); res(u);
   }; im.onerror=rej; im.src=src(a); });
 }
-let glbUrl=null;
+let glbUrl=null, usdzUrl=null, threeMods=null;
+const IS_IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+// iPhone AR (Quick Look) needs its own USDZ file. We build it here and mark it to anchor to vertical walls only,
+// so the painting snaps flat onto a wall at its true size instead of floating in front of it.
+function loadThree(){
+  if(!threeMods){ const v="0.160.0", b=`https://cdn.jsdelivr.net/npm/three@${v}/examples/jsm/`;
+    threeMods=Promise.all([import(`${b}loaders/GLTFLoader.js`),import(`${b}exporters/USDZExporter.js`)]); }
+  return threeMods;
+}
+async function makeUSDZ(glb){
+  const [{GLTFLoader},{USDZExporter}]=await loadThree();
+  const gltf=await new GLTFLoader().parseAsync(glb.buffer.slice(glb.byteOffset,glb.byteOffset+glb.byteLength),"");
+  const opts={ar:{anchoring:{type:"plane"},planeAnchoring:{alignment:"vertical"}},includeAnchoringProperties:true,quickLookCompatible:true,maxTextureSize:2048};
+  const ex=new USDZExporter();
+  const out=ex.parseAsync? await ex.parseAsync(gltf.scene,opts) : await ex.parse(gltf.scene,opts);
+  return new Blob([out],{type:"model/vnd.usdz+zip"});
+}
 async function openAR(a){
   const g=vGeom(a); $("arTitle").textContent=a.title; $("ar").classList.add("open");
   const look = g.round ? "Round canvas" : (g.f ? `${V_FRAMES.find(x=>x[0]===V.frame)[1]} frame${V.mat!=="none"?", "+V.mat+" mat":""}` : "Unframed canvas");
@@ -800,9 +817,15 @@ async function openAR(a){
     const glb=buildGLB(a, await paintingJpeg(a));
     if(glbUrl) URL.revokeObjectURL(glbUrl); glbUrl=URL.createObjectURL(new Blob([glb],{type:"model/gltf-binary"}));
     const mv=$("mv"); mv.setAttribute("src",glbUrl);
+    if(usdzUrl){ URL.revokeObjectURL(usdzUrl); usdzUrl=null; } mv.removeAttribute("ios-src");
+    if(IS_IOS){
+      const place=mv.querySelector(".ar-place"); place.style.visibility="hidden";
+      makeUSDZ(glb).then(b=>{ usdzUrl=URL.createObjectURL(b); mv.setAttribute("ios-src",usdzUrl); })
+        .catch(()=>{}).finally(()=>{ place.style.visibility=""; });
+    }
     if(!customElements.get("model-viewer")) $("arMsg").innerHTML="<br>Loading the 3D viewer…";
     mv.addEventListener("load",()=>{ $("arMsg").innerHTML = mv.canActivateAR
-      ? "<br>Tap <b>Place on my wall</b>, then slowly pan your camera across the wall until the painting snaps to it."
+      ? "<br>Tap <b>Place on my wall</b>. Stand 5–8 feet back in good light and slowly pan across the wall. Once the painting snaps flat to the wall, drag it to move it; it stays true size."
       : "<br>To see it on your wall, open this page on your phone and tap <b>View on your wall</b>."; },{once:true});
   }catch(e){ $("arMsg").innerHTML="<br>Couldn't build the 3D preview for this painting. Try again in a moment."; }
 }
