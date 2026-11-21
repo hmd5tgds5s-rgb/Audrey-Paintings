@@ -498,12 +498,13 @@ const ART=[
  {id:"moonlit-swan", title:"Moonlit Swan", cat:["birds","water"], w:11, h:14, depth:0.75, edge:"#141a1c", desc:"A swan gliding across a dark pond under a full moon, ripples catching the light."},
  {id:"duckling", title:"Duckling Among the Lily Pads", cat:["birds","water"], w:4, h:6, depth:0.15, edge:"#3e7fa0", desc:"A fluffy yellow duckling paddling through reflections and lily pads."},
  {id:"wild-horse", title:"Wild Horse", cat:["wildlife","landscapes"], w:14, h:11, depth:0.75, edge:"#e8b960", desc:"A grey horse with a dark mane standing in a meadow of pink and gold hills."},
- {id:"moonrise-mountains", title:"Moonrise over the Mountains", cat:["landscapes"], w:6, h:6, depth:.15, edge:"#2e3f7a", frame:"gold", desc:"A full moon rising through glowing pink and gold clouds over layered blue mountains. Comes in an ornate gold frame."},
+ {id:"moonrise-mountains", title:"Moonrise over the Mountains", cat:["landscapes"], w:6, h:6, depth:.15, edge:"#2e3f7a", frame:"gold", frameNote:"Ornate gold frame included", desc:"A full moon rising through glowing pink and gold clouds over layered blue mountains. Comes in an ornate gold frame."},
  {id:"fox", title:"Red Fox in Snow", cat:["wildlife"], w:5, h:7, depth:0.15, edge:"#2c3a4c", desc:"A red fox standing alert in a snowy night meadow."},
  {id:"hummingbird", title:"Hummingbird", cat:["birds"], w:7, h:5, depth:0.15, edge:"#7a4a7a", desc:"An iridescent hummingbird mid-flight against a pink, gold and violet sunset sky."},
  {id:"hummingbird-garden", title:"Hummingbird in the Garden", cat:["birds"], w:8, h:6, depth:.15, edge:"#2f5a5a", desc:"A lilac-and-green hummingbird hovering beside pink, orange and purple wildflowers."},
  {id:"longhorn", title:"Longhorn in the Shade", cat:["wildlife","landscapes"], w:12, h:9, depth:0.75, edge:"#d9c37a", desc:"A Texas longhorn resting beneath an oak on a golden summer afternoon."},
  {id:"dachshund", title:"Dachshund Portrait", cat:["pets"], w:10, h:10, depth:0.6, edge:"#3f7a3a", round:true, desc:"A red dachshund looking up from the grass, painted on a round canvas."},
+ {id:"beach-pup", title:"Beach Day Pup", cat:["pets","minis"], w:4, h:4, depth:.15, edge:"#3d7fb5", frame:"gold", mat:"white", frameW:.45, matW:.6, frameNote:"Gold frame with white mat included", desc:"A shaggy pup in heart-shaped sunglasses and a polka-dot bandana, soaking up a day at the beach."},
  {id:"frog", title:"Pond Frog", cat:["wildlife","water","minis"], w:4, h:4, depth:0.6, edge:"#2d4a6a", desc:"A wide-eyed green frog peering up from the pond."},
  {id:"swan-pair", title:"Two Swans", cat:["birds","water","minis"], w:4, h:4, depth:0.6, edge:"#1d2430", desc:"A pair of swans drifting together on a night-dark lake."},
  {id:"golden-wave", title:"Golden Wave", cat:["landscapes","water","minis"], w:4, h:4, depth:0.15, edge:"#c9a25a", desc:"A turquoise wave curling onto the sand at sunset."},
@@ -511,7 +512,7 @@ const ART=[
 ];
 const origPrice=a=>a.price||(a.cat.includes("minis")?MINI_PRICE:null)||"$"+Math.max(MIN_ORIGINAL,Math.round((a.round?a.w*2:a.w+a.h)*RATE/5)*5);
 const dimText=a=>a.round?`${a.w} in round (approx.)`:`${a.w} × ${a.h} in (approx.)`;
-const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[1422,1011],"phoenix":[1244,1600],"moonrise-mountains":[1068,1074],"longhorn-pond":[1600,1257],"hummingbird-garden":[1600,1200],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
+const DIMS={"pink-cockatoo":[984,1249],"white-cockatoo":[1187,1492],"fawn":[1498,983],"moonlit-swan":[1249,1600],"duckling":[1053,1600],"wild-horse":[1600,1246],"fox":[261,355],"hummingbird":[1422,1011],"beach-pup":[1137,1144],"phoenix":[1244,1600],"moonrise-mountains":[1068,1074],"longhorn-pond":[1600,1257],"hummingbird-garden":[1600,1200],"longhorn":[1600,1198],"dachshund":[1200,1200],"frog":[604,615],"swan-pair":[606,581],"golden-wave":[578,548],"sunflower-meadow":[594,539]};
 const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","Pets"],["water","Water"],["landscapes","Landscapes"],["minis","Minis"],["sold","Collected"]];
 const EMAIL="audreyascott@hotmail.com";
 // Paste a Formspree form URL here (https://formspree.io/f/xxxxxxx) to have requests emailed to Audrey.
@@ -544,7 +545,7 @@ function openLB(i){
   const im=$("lbImg"); im.src=src(a); im.alt=a.desc; im.className=a.round?"round":"";
   $("lbTag").textContent=a.cat.map(c=>FILTERS.find(f=>f[0]===c)[1]).join(" · ");
   $("lbTitle").textContent=a.title; $("lbDesc").textContent=a.desc;
-  $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd>${a.frame?"<dt>Frame</dt><dd>Ornate gold frame included</dd>":""}<dt>Original</dt><dd>${a.sold?"Sold · prints available":origPrice(a)}</dd>`;
+  $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd>${a.frameNote?`<dt>Frame</dt><dd>${a.frameNote}</dd>`:""}<dt>Original</dt><dd>${a.sold?"Sold · prints available":origPrice(a)}</dd>`;
   $("lbOrig").style.display=a.sold?"none":"";
   $("lbPrint").innerHTML=printsFor(a).map(([s,p])=>`<option>${s} · ${p}</option>`).join("");
   $("lbNote").textContent="";
@@ -557,7 +558,7 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&$("ar").classList.
 let tx=null; $("lb").addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
 $("lb").addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>60) openLB(idx+(dx<0?1:-1)); tx=null; });
 $("lbBuy").onclick=()=>{ const a=shown[idx]; $("lbNote").textContent=`Checkout isn't connected yet. For now, email ${EMAIL} to order "${a.title}" as a ${$("lbPrint").value.split(" · ")[0]} print.`; };
-$("lbAR").onclick=()=>{ const a=shown[idx]; V.frame=a.frame||"none"; V.mat="none"; V.mode="gallery"; openAR(a); };
+$("lbAR").onclick=()=>{ const a=shown[idx]; V.frame=a.frame||"none"; V.mat=a.mat||"none"; V.mode="gallery"; openAR(a); };
 $("lbView").onclick=()=>openViewer(shown[idx]);
 $("lbOrig").onclick=()=>{ const a=shown[idx]; closeLB(); prefill(`buying the original "${a.title}" (${origPrice(a)})`); };
 
@@ -601,8 +602,11 @@ const vcur={rx:0,ry:0}, vtgt={rx:0,ry:0}; let vInter=false, vDown=false, vRunnin
 
 function vGeom(a){ // inches
   const round=!!a.round, shadow=V.mode==="shadow" && !round;
-  const f = round||V.frame==="none" ? 0 : (shadow?1.9:(V.frame==="gold"?1.75:1.15));
+  let f = round||V.frame==="none" ? 0 : (shadow?1.9:(V.frame==="gold"?1.75:1.15));
   let m = (round||V.frame==="none") ? 0 : (V.mat==="none"?0:2.25); if(shadow) m=Math.max(m,1.75);
+  // a piece sold in its own frame keeps that frame's real proportions
+  const own = a.frame && V.frame===a.frame && !shadow;
+  if(own && a.frameW!=null) f=a.frameW; if(own && a.matW!=null && V.mat!=="none") m=a.matW;
   const d = round||V.frame==="none" ? a.depth : (shadow?2.4:V_DEPTH[V.frame]);
   return {f,m,d,shadow,round,W:a.w+2*(f+m),H:a.h+2*(f+m)};
 }
@@ -705,7 +709,7 @@ function vAim(e){ const r=$("vwStage").getBoundingClientRect(), x=(e.clientX-r.l
   new ResizeObserver(()=>{ if(vArt && $("vw").classList.contains("open")) vRender(); }).observe(st);
 })();
 function openViewer(a){
-  vArt=a; if(a.frame){ V.frame=a.frame; V.mat="none"; }
+  vArt=a; if(a.frame){ V.frame=a.frame; V.mat=a.mat||"none"; }
   if(a.round){ V.frame="none"; V.mat="none"; if(V.mode==="shadow") V.mode="gallery"; }
   $("vwTitle").textContent=a.title; $("vw").classList.add("open"); document.body.style.overflow="hidden";
   $("vwHint").style.opacity=1; vUI(); requestAnimationFrame(()=>{ vRender(); if(!vRunning){ vRunning=true; requestAnimationFrame(vLoop);} });
