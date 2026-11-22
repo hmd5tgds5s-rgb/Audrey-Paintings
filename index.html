@@ -802,15 +802,18 @@ const IS_IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==
 // so the painting snaps flat onto a wall at its true size instead of floating in front of it.
 function loadThree(){
   if(!threeMods){ const v="0.160.0", b=`https://cdn.jsdelivr.net/npm/three@${v}/examples/jsm/`;
-    threeMods=Promise.all([import(`${b}loaders/GLTFLoader.js`),import(`${b}exporters/USDZExporter.js`)]); }
+    threeMods=Promise.all([import(`${b}loaders/GLTFLoader.js`),import(`${b}exporters/USDZExporter.js`),import("three")]); }
   return threeMods;
 }
 async function makeUSDZ(glb){
-  const [{GLTFLoader},{USDZExporter}]=await loadThree();
+  const [{GLTFLoader},{USDZExporter},THREE]=await loadThree();
   const gltf=await new GLTFLoader().parseAsync(glb.buffer.slice(glb.byteOffset,glb.byteOffset+glb.byteLength),"");
   const opts={ar:{anchoring:{type:"plane"},planeAnchoring:{alignment:"vertical"}},includeAnchoringProperties:true,quickLookCompatible:true,maxTextureSize:2048};
+  // Apple's wall anchor uses Y as "out of the wall": lay the painting face-up (front +Z -> +Y),
+  // which puts its top along -Z, the direction Quick Look treats as up on a wall.
+  const root=new THREE.Group(); const inner=gltf.scene; inner.rotation.x=-Math.PI/2; root.add(inner); root.updateMatrixWorld(true);
   const ex=new USDZExporter();
-  const out=ex.parseAsync? await ex.parseAsync(gltf.scene,opts) : await ex.parse(gltf.scene,opts);
+  const out=ex.parseAsync? await ex.parseAsync(root,opts) : await ex.parse(root,opts);
   return new Blob([out],{type:"model/vnd.usdz+zip"});
 }
 async function openAR(a){
