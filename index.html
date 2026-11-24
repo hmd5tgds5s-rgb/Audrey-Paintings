@@ -366,10 +366,9 @@ model-viewer:not(:defined) .ar-place{display:none}
         </label>
         <label for="cDate">Needed by<input id="cDate" name="date" type="date"></label>
       </div>
-      <label for="cPhotos">Photos (optional)<input id="cPhotos" name="photos" type="file" accept="image/*" multiple></label>
       <label for="cMsg">Anything else?<textarea id="cMsg" name="message" placeholder="Personality, favorite toy, background color…"></textarea></label>
       <button class="btn" type="submit">Send request</button>
-      <p class="form-note">Audrey replies within a few days with a quote and timeline.</p>
+      <p class="form-note">Audrey replies within a few days with a quote and timeline. You can send your photos by replying to her email.</p>
       <div class="sent" id="sent" role="status"></div>
     </form>
   </div>
@@ -517,6 +516,11 @@ const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","
 const EMAIL="audreyascott@hotmail.com";
 // Paste a Formspree form URL here (https://formspree.io/f/xxxxxxx) to have requests emailed to Audrey.
 const FORM_ENDPOINT="";
+// Shopify checkout links, filled in once the store is set up. Key = painting id.
+// print: one link per painting (size is chosen on the Shopify page); original: that painting's one-of-a-kind listing.
+const SHOP={
+  // "pink-cockatoo": {print:"https://...", original:"https://..."},
+};
 
 const $=id=>document.getElementById(id);
 const src=(a,thumb)=>`art/${thumb?"thumb/":""}${a.id}.${a.id==="dachshund"?"webp":"jpg"}`;
@@ -557,10 +561,10 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&$("ar").classList.
   if(e.key==="Escape") closeLB(); if(e.key==="ArrowLeft") openLB(idx-1); if(e.key==="ArrowRight") openLB(idx+1); });
 let tx=null; $("lb").addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
 $("lb").addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>60) openLB(idx+(dx<0?1:-1)); tx=null; });
-$("lbBuy").onclick=()=>{ const a=shown[idx]; $("lbNote").textContent=`Checkout isn't connected yet. For now, email ${EMAIL} to order "${a.title}" as a ${$("lbPrint").value.split(" · ")[0]} print.`; };
+$("lbBuy").onclick=()=>{ const a=shown[idx]; const l=(SHOP[a.id]||{}).print; if(l){ location.href=l; return; } $("lbNote").textContent=`Checkout isn't connected yet. For now, email ${EMAIL} to order "${a.title}" as a ${$("lbPrint").value.split(" · ")[0]} print.`; };
 $("lbAR").onclick=()=>{ const a=shown[idx]; V.frame=a.frame||"none"; V.mat=a.mat||"none"; V.mode="gallery"; openAR(a); };
 $("lbView").onclick=()=>openViewer(shown[idx]);
-$("lbOrig").onclick=()=>{ const a=shown[idx]; closeLB(); prefill(`buying the original "${a.title}" (${origPrice(a)})`); };
+$("lbOrig").onclick=()=>{ const a=shown[idx]; const l=(SHOP[a.id]||{}).original; if(l){ location.href=l; return; } closeLB(); prefill(`buying the original "${a.title}" (${origPrice(a)})`); };
 
 function prefill(what){
   $("cSubject").value=""; $("cMsg").value=`Hi Audrey, I'm interested in ${what}.`;
