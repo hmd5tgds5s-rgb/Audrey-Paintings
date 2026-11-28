@@ -64,6 +64,9 @@ h1,h2,h3{font-family:var(--display); font-weight:400; line-height:1.1; text-wrap
 }
 
 /* hero */
+.intro{padding:34px 0 6px}
+.intro h1{font-size:clamp(32px,4.4vw,54px); letter-spacing:-.01em; margin-top:10px; max-width:24ch}
+.intro .lede{font-size:18px; color:var(--muted); max-width:52ch; margin:14px 0 0}
 .hero{padding:44px 0 30px}
 .hero .wrap{display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center}
 .hero h1{font-size:clamp(40px,6.2vw,74px); letter-spacing:-.01em}
@@ -89,8 +92,10 @@ section{padding:64px 0}
 .filters{display:flex; flex-wrap:wrap; gap:8px}
 .chip{border:1.5px solid rgba(36,48,31,.3); background:transparent; color:var(--ink); padding:7px 14px; border-radius:999px; font:500 14px var(--body); cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
-.grid{columns:4 250px; column-gap:22px}
-.card{break-inside:avoid; margin:0 0 22px; display:block; width:100%; border:0; padding:0; background:none; text-align:left; cursor:pointer; color:inherit; font:inherit}
+.grid{columns:3 300px; column-gap:28px}
+#gallery{padding-top:22px}
+#gallery .sec-head{align-items:center; margin-bottom:22px}
+.card{break-inside:avoid; margin:0 0 30px; display:block; width:100%; border:0; padding:0; background:none; text-align:left; cursor:pointer; color:inherit; font:inherit}
 .card .mat{background:var(--paper); padding:12px; box-shadow:0 1px 2px rgba(36,48,31,.12), 0 10px 24px rgba(36,48,31,.16); transition:transform .25s ease, box-shadow .25s ease}
 .card:hover .mat{transform:translateY(-3px); box-shadow:0 2px 4px rgba(36,48,31,.14), 0 18px 34px rgba(36,48,31,.24)}
 .card .mat.round{border-radius:50%; padding:10px; aspect-ratio:1}
@@ -98,7 +103,7 @@ section{padding:64px 0}
 .card .meta{display:flex; justify-content:space-between; gap:10px; padding:10px 2px 0; align-items:baseline}
 .card .t{font-family:var(--display); font-size:19px; line-height:1.2}
 .card .s{font-size:13px; color:var(--muted); white-space:nowrap}
-@media (max-width:600px){ .grid{columns:2; column-gap:12px} .card{margin-bottom:16px} .card .mat{padding:7px} .card .t{font-size:16px} .card .s{display:none} }
+@media (max-width:600px){ .grid{columns:1} .card{margin-bottom:26px} .card .mat{padding:10px} .card .t{font-size:20px} }
 .sold{font:600 11px var(--body); letter-spacing:.06em; text-transform:uppercase; color:var(--paper); background:var(--plum); padding:2px 7px; border-radius:999px; vertical-align:3px; margin-left:4px}
 .faq-list{display:grid; gap:10px; max-width:820px}
 .faq details{background:var(--paper); padding:0 20px; box-shadow:0 4px 14px rgba(36,48,31,.1)}
@@ -253,7 +258,6 @@ model-viewer:not(:defined) .ar-place{display:none}
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links">Menu</button>
     <div class="links" id="links">
       <a href="#gallery">Gallery</a>
-      <a href="#shop">Shop</a>
       <a href="#commissions">Commissions</a>
       <a href="#about">About</a>
       <a href="#faq">FAQ</a>
@@ -262,21 +266,11 @@ model-viewer:not(:defined) .ar-place{display:none}
   </div>
 </nav>
 
-<header class="hero" id="top">
+<header class="intro" id="top">
   <div class="wrap">
-    <div>
-      <span class="tag">Original acrylic paintings</span>
-      <h1 style="margin-top:10px">Birds, wild things and the animals we love</h1>
-      <p class="lede">Hand-painted portraits of cockatoos, foxes, fawns and family pets, from palm-sized minis to statement canvases.</p>
-      <div class="btns">
-        <a class="btn" href="#gallery">See the paintings</a>
-        <a class="btn ghost" href="#commissions">Commission a pet portrait</a>
-      </div>
-    </div>
-    <div class="hero-art">
-      <div class="mat"><img src="art/pink-cockatoo.jpg" alt="Painting of a pink cockatoo against a soft blue sky" width="984" height="1249"></div>
-      <div class="mini"><img src="art/thumb/frog.jpg" alt="Mini painting of a green frog" width="604" height="615"></div>
-    </div>
+    <span class="tag">Original acrylic paintings by Audrey</span>
+    <h1>Birds, wild things and the animals we love</h1>
+    <p class="lede">Cockatoos, foxes, fawns and family pets, from palm-sized minis to statement canvases. Tap any painting to see it up close, or hang it on your own wall.</p>
   </div>
 </header>
 
@@ -285,7 +279,6 @@ model-viewer:not(:defined) .ar-place{display:none}
     <div class="sec-head">
       <div>
         <h2>Gallery</h2>
-        <p>Tap any painting to see it larger, order a print or ask about the original.</p>
       </div>
       <div class="filters" id="filters" role="group" aria-label="Filter paintings"></div>
     </div>
@@ -293,88 +286,72 @@ model-viewer:not(:defined) .ar-place{display:none}
   </div>
 </section>
 
-<section id="shop" class="band">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <h2>Shop</h2>
-        <p>Every painting is available as a print. Originals and commissions are one of a kind.</p>
-      </div>
-    </div>
-    <div class="shop">
-      <div class="panel">
-        <span class="tag">Prints</span>
-        <h3>Art &amp; canvas prints</h3>
-        <p>Archival art prints on heavyweight matte paper. Stretched canvas prints, ready to hang, are available for larger paintings.</p>
-        <ul class="price-list" id="printPrices"></ul>
-        <a class="btn" href="#gallery">Choose a painting</a>
-      </div>
-      <div class="panel">
-        <span class="tag">Originals</span>
-        <h3>The painting itself</h3>
-        <p>Own the canvas Audrey painted. Each original ships wrapped and signed on the back.</p>
-        <ul class="price-list">
-          <li><span>Minis, 4×4 in</span><b>$75</b></li>
-          <li><span>Small, 4×6 to 8×6 in</span><b>$160–225</b></li>
-          <li><span>Medium, 9×12 to 11×14 in</span><b>$320–400</b></li>
-          <li><span>Large, 16×20 to 22×28 in</span><b>$575–800</b></li>
-        </ul>
-        <a class="btn ghost" href="#contact" data-inquire="an original painting">Ask about an original</a>
-      </div>
-      <div class="panel">
-        <span class="tag">Commissions</span>
-        <h3>Paint my animal</h3>
-        <p>A portrait of your dog, cat, horse or favorite bird, painted from your photos.</p>
-        <ul class="price-list" id="commPrices"></ul>
-        <a class="btn" href="#commissions">Start a commission</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="commissions">
+<section id="commissions" class="band">
   <div class="wrap comm">
     <div>
       <h2 style="font-size:clamp(32px,4.4vw,48px)">Commission a portrait</h2>
-      <p style="color:var(--muted); max-width:52ch">Send a few photos of your pet or the animal you love, and Audrey will paint it in her style on the canvas size you choose.</p>
+      <p style="color:var(--muted); max-width:52ch">Audrey paints pets and the animals people love from your photos, in her own style, on the canvas size you choose.</p>
       <ol class="steps">
-        <li><div><b>Share your photos</b><span>Clear, well-lit photos at your animal's eye level work best. Send three or four.</span></div></li>
-        <li><div><b>Pick a size and shape</b><span>Square, rectangle or round canvas, from mini to large.</span></div></li>
-        <li><div><b>Approve the sketch</b><span>Audrey sends a quick sketch so you can request changes before painting starts.</span></div></li>
-        <li><div><b>Receive your painting</b><span>Most portraits take two to four weeks, then ship signed and ready to hang.</span></div></li>
+        <li><div><b>Send the form</b><span>Tell Audrey who you'd like painted and roughly what size. This starts an email conversation with her.</span></div></li>
+        <li><div><b>Email your photos</b><span>Audrey replies by email; send three or four clear, well-lit photos as a reply.</span></div></li>
+        <li><div><b>Approve the sketch</b><span>She sends a quick sketch so you can ask for changes before any paint goes on.</span></div></li>
+        <li><div><b>Pay and receive it</b><span>Pay Audrey directly by Venmo, Apple Cash, Cash App or Zelle. Most portraits take two to four weeks.</span></div></li>
       </ol>
+      <p class="tag" style="margin:26px 0 8px">Starting prices</p>
+      <ul class="price-list" id="commPrices" style="max-width:420px"></ul>
       <div class="comm-art">
-        <img src="art/thumb/dachshund.webp" alt="Round painting of a dachshund looking up from the grass" width="720" height="720">
+        <img src="art/thumb/dachshund.webp" alt="Round painting of a dachshund looking up from the grass" width="720" height="720" loading="lazy">
         <p>A round-canvas pet portrait. Round canvases make a sweet gift and look great in a group.</p>
       </div>
     </div>
-    <form id="commForm" novalidate>
-      <div class="row2">
-        <label for="cName">Your name<input id="cName" name="name" autocomplete="name" required></label>
-        <label for="cEmail">Email<input id="cEmail" name="email" type="email" autocomplete="email" required></label>
-      </div>
-      <label for="cSubject">What should Audrey paint?<input id="cSubject" name="subject" placeholder="e.g. my golden retriever, Sunny"></label>
-      <div class="row2">
-        <label for="cSize">Size
-          <select id="cSize" name="size">
-            <option>Mini (about 4×4 in)</option>
-            <option>Small (8×10 in)</option>
-            <option>Round (10 in)</option>
-            <option>Large (16×20 in)</option>
-            <option>Not sure yet</option>
+    <div id="contact">
+      <form id="commForm" novalidate>
+        <div>
+          <h3 style="font-size:28px">Get in touch</h3>
+          <p class="form-note" style="margin-top:6px">For commissions, prints or an original painting. Sending this form emails Audrey, and she'll reply to you directly to talk through details, price and shipping. No payment happens on this site.</p>
+        </div>
+        <div class="row2">
+          <label for="cName">Your name<input id="cName" name="name" autocomplete="name" required></label>
+          <label for="cEmail">Email<input id="cEmail" name="email" type="email" autocomplete="email" required></label>
+        </div>
+        <label for="cType">I'm interested in
+          <select id="cType" name="interest">
+            <option>A commission</option>
+            <option>A print</option>
+            <option>An original painting</option>
+            <option>Something else</option>
           </select>
         </label>
-        <label for="cDate">Needed by<input id="cDate" name="date" type="date"></label>
-      </div>
-      <label for="cMsg">Anything else?<textarea id="cMsg" name="message" placeholder="Personality, favorite toy, background color…"></textarea></label>
-      <button class="btn" type="submit">Send request</button>
-      <p class="form-note">Audrey replies within a few days with a quote and timeline. You can send your photos by replying to her email.</p>
-      <div class="sent" id="sent" role="status"></div>
-    </form>
+        <label for="cPiece" id="pieceRow">Which painting?
+          <select id="cPiece" name="painting"></select>
+        </label>
+        <div id="commFields" style="display:grid; gap:14px">
+          <label for="cSubject">What should Audrey paint?<input id="cSubject" name="subject" placeholder="e.g. my golden retriever, Sunny"></label>
+          <div class="row2">
+            <label for="cSize">Size
+              <select id="cSize" name="size">
+                <option>Mini (about 4×4 in)</option>
+                <option>Small (8×10 in)</option>
+                <option>Round (10 in)</option>
+                <option>Medium (16×20 in)</option>
+                <option>Large (22×28 in)</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+            <label for="cDate">Needed by<input id="cDate" name="date" type="date"></label>
+          </div>
+        </div>
+        <label for="cMsg">Message<textarea id="cMsg" name="message" placeholder="Anything Audrey should know: size, colors, personality, where it will hang…"></textarea></label>
+        <button class="btn" type="submit">Send to Audrey</button>
+        <p class="form-note" id="formNote">Audrey replies by email within a few days. For a commission, you'll email her your photos in that conversation.</p>
+        <div class="sent" id="sent" role="status"></div>
+      </form>
+      <p class="form-note" style="margin-top:14px">Prefer email? Write to <a href="mailto:audreyascott@hotmail.com">audreyascott@hotmail.com</a> (audreyascott@hotmail.com). See new work on Instagram at <a href="https://www.instagram.com/audreylikestopaint/">@audreylikestopaint</a>.</p>
+    </div>
   </div>
 </section>
 
-<section id="about" class="band">
+<section id="about">
   <div class="wrap about">
     <img class="portrait-img" src="art/audrey.jpg" alt="Audrey smiling and hugging her dachshund in her kitchen" width="960" height="1200" loading="lazy">
     <div>
@@ -385,25 +362,18 @@ model-viewer:not(:defined) .ar-place{display:none}
   </div>
 </section>
 
-<section id="faq">
+<section id="faq" class="band">
   <div class="wrap faq">
-    <div class="sec-head"><div><h2>Questions</h2><p>Commissions, shipping, returns and care.</p></div></div>
+    <div class="sec-head"><div><h2>Questions</h2><p>Buying, paying, commissions and care.</p></div></div>
     <div class="faq-list">
-      <details><summary>How long does a commission take?</summary><p>Most portraits take two to four weeks once you approve the sketch. Larger canvases can take longer. Audrey confirms the timeline with your quote.</p></details>
-      <details><summary>How do I pay for a commission?</summary><p>A 50% deposit reserves your spot and the balance is due before your painting ships. If the sketch isn't right, Audrey revises it before any paint goes on canvas.</p></details>
-      <details><summary>Do originals come ready to hang?</summary><p>Stretched canvases arrive ready to hang with painted edges, so they look finished without a frame. Small canvas panels and minis look best in a small frame or on a tabletop easel.</p></details>
-      <details><summary>How are prints made?</summary><p>Prints are made to order by a professional print studio on archival matte paper or stretched canvas, then shipped straight to you. Art prints arrive unframed. Colors can look slightly different on screens than in person.</p></details>
-      <details><summary>How long does shipping take?</summary><p>Originals are wrapped carefully and shipped with tracking within a few business days. Prints are made to order and usually arrive within one to two weeks. Audrey ships within the US for now.</p></details>
-      <details><summary>What's your return policy?</summary><p>If a print arrives damaged or misprinted, email a photo within 14 days and it will be replaced free. Originals can be returned within 14 days in their original condition; return shipping is paid by the buyer. Commissions are custom and can't be returned, which is why you approve the sketch first.</p></details>
+      <details><summary>How do I buy a print or an original?</summary><p>Send the form above (or email Audrey) with the painting you like. She'll confirm sizes, price and shipping by email, and you pay her directly. Prints are the main offering for now; ask if you're hoping for an original.</p></details>
+      <details><summary>How do I pay?</summary><p>Payment is arranged by email and made directly to Audrey by Venmo, Apple Cash, Cash App or Zelle. Nothing is charged through this website.</p></details>
+      <details><summary>How long does a commission take?</summary><p>Most portraits take two to four weeks once you approve the sketch. Larger canvases can take longer. Audrey confirms the timeline when she replies.</p></details>
+      <details><summary>How do I send photos for a commission?</summary><p>After you send the form, Audrey emails you back. Reply to that email with three or four clear, well-lit photos, ideally taken at your animal's eye level.</p></details>
+      <details><summary>Do paintings come ready to hang?</summary><p>Stretched canvases arrive ready to hang with painted edges, so they look finished without a frame. Small canvas panels and minis look best in a small frame or on a tabletop easel.</p></details>
+      <details><summary>Where do you ship?</summary><p>Within the US for now. Audrey confirms the shipping cost by email before you pay.</p></details>
       <details><summary>How do I care for my painting?</summary><p>Hang it out of direct sunlight and away from humid spots like bathrooms. Dust gently with a soft, dry cloth. No water or cleaners needed.</p></details>
     </div>
-  </div>
-</section>
-
-<section id="contact" class="band">
-  <div class="wrap" style="max-width:720px">
-    <h2 style="font-size:clamp(32px,4.4vw,48px); margin-bottom:12px">Say hello</h2>
-    <p style="color:var(--muted)">Questions about a painting, a print order or a commission? Email Audrey at <a href="mailto:audreyascott@hotmail.com">audreyascott@hotmail.com</a> (audreyascott@hotmail.com) or follow new work on Instagram at <a href="https://www.instagram.com/audreylikestopaint/">@audreylikestopaint</a>.</p>
   </div>
 </section>
 
@@ -427,13 +397,9 @@ model-viewer:not(:defined) .ar-place{display:none}
     <h3 id="lbTitle"></h3>
     <p id="lbDesc" style="margin:0; color:var(--muted)"></p>
     <dl id="lbDl"></dl>
-    <label for="lbPrint">Print size
-      <select id="lbPrint"></select>
-    </label>
-    <button class="btn" id="lbAR">View on your wall</button>
+    <button class="btn" id="lbAsk">Ask about a print</button>
+    <button class="btn ghost" id="lbAR">View on your wall</button>
     <button class="btn ghost" id="lbView">Preview in a frame</button>
-    <button class="btn" id="lbBuy">Order this print</button>
-    <button class="btn ghost" id="lbOrig">Buy the original</button>
     <p class="form-note" id="lbNote"></p>
   </aside>
 </div>
@@ -516,11 +482,6 @@ const FILTERS=[["all","All"],["birds","Birds"],["wildlife","Wildlife"],["pets","
 const EMAIL="audreyascott@hotmail.com";
 // Paste a Formspree form URL here (https://formspree.io/f/xxxxxxx) to have requests emailed to Audrey.
 const FORM_ENDPOINT="https://formspree.io/f/xaeoavll";
-// Shopify checkout links, filled in once the store is set up. Key = painting id.
-// print: one link per painting (size is chosen on the Shopify page); original: that painting's one-of-a-kind listing.
-const SHOP={
-  // "pink-cockatoo": {print:"https://...", original:"https://..."},
-};
 
 const $=id=>document.getElementById(id);
 const src=(a,thumb)=>`art/${thumb?"thumb/":""}${a.id}.${a.id==="dachshund"?"webp":"jpg"}`;
@@ -549,9 +510,7 @@ function openLB(i){
   const im=$("lbImg"); im.src=src(a); im.alt=a.desc; im.className=a.round?"round":"";
   $("lbTag").textContent=a.cat.map(c=>FILTERS.find(f=>f[0]===c)[1]).join(" · ");
   $("lbTitle").textContent=a.title; $("lbDesc").textContent=a.desc;
-  $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd>${a.frameNote?`<dt>Frame</dt><dd>${a.frameNote}</dd>`:""}<dt>Original</dt><dd>${a.sold?"Sold · prints available":origPrice(a)}</dd>`;
-  $("lbOrig").style.display=a.sold?"none":"";
-  $("lbPrint").innerHTML=printsFor(a).map(([s,p])=>`<option>${s} · ${p}</option>`).join("");
+  $("lbDl").innerHTML=`<dt>Medium</dt><dd>Acrylic on canvas</dd><dt>Size</dt><dd>${dimText(a)}</dd>${a.frameNote?`<dt>Frame</dt><dd>${a.frameNote}</dd>`:""}<dt>Available</dt><dd>${a.sold?"Original sold · prints on request":"Prints on request"}</dd>`;
   $("lbNote").textContent="";
   $("lb").classList.add("open"); document.body.style.overflow="hidden"; $("lbX").focus();
 }
@@ -561,18 +520,28 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&$("ar").classList.
   if(e.key==="Escape") closeLB(); if(e.key==="ArrowLeft") openLB(idx-1); if(e.key==="ArrowRight") openLB(idx+1); });
 let tx=null; $("lb").addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
 $("lb").addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>60) openLB(idx+(dx<0?1:-1)); tx=null; });
-$("lbBuy").onclick=()=>{ const a=shown[idx]; const l=(SHOP[a.id]||{}).print; if(l){ location.href=l; return; } $("lbNote").textContent=`Checkout isn't connected yet. For now, email ${EMAIL} to order "${a.title}" (${$("lbPrint").value.split(" · ")[0].replace(/^(\w+) print/,(m,k)=>k.toLowerCase()+" print,")}).`; };
 $("lbAR").onclick=()=>{ const a=shown[idx]; V.frame=a.frame||"none"; V.mat=a.mat||"none"; V.mode="gallery"; openAR(a); };
 $("lbView").onclick=()=>openViewer(shown[idx]);
-$("lbOrig").onclick=()=>{ const a=shown[idx]; const l=(SHOP[a.id]||{}).original; if(l){ location.href=l; return; } closeLB(); prefill(`buying the original "${a.title}" (${origPrice(a)})`); };
+$("lbAsk").onclick=()=>{ const a=shown[idx]; closeLB(); prefill("print",a); };
 
-function prefill(what){
-  $("cSubject").value=""; $("cMsg").value=`Hi Audrey, I'm interested in ${what}.`;
-  document.getElementById("commissions").scrollIntoView(); setTimeout(()=>$("cName").focus(),400);
+// interest-aware form: commission fields vs. "which painting"
+function syncForm(){
+  const t=$("cType").value, comm=t==="A commission", piece=t==="A print"||t==="An original painting";
+  $("commFields").style.display=comm?"grid":"none";
+  $("pieceRow").style.display=piece?"":"none";
+  $("formNote").textContent = comm
+    ? "Audrey replies by email within a few days. You'll email her your photos in that conversation."
+    : "Audrey replies by email within a few days to confirm size, price and shipping. You pay her directly by Venmo, Apple Cash, Cash App or Zelle.";
 }
-document.querySelectorAll("[data-inquire]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault(); prefill(a.dataset.inquire);}));
+$("cPiece").innerHTML='<option value="">Not sure yet</option>'+ART.map(a=>`<option>${a.title}</option>`).join("");
+$("cType").addEventListener("change",syncForm); syncForm();
+function prefill(kind,a){
+  $("cType").value = kind==="original" ? "An original painting" : kind==="print" ? "A print" : "A commission";
+  if(a) $("cPiece").value=a.title;
+  syncForm();
+  document.getElementById("contact").scrollIntoView({behavior:"smooth"}); setTimeout(()=>$("cName").focus({preventScroll:true}),500);
+}
 
-$("printPrices").innerHTML=PRINTS.map(([s,p])=>`<li><span>${s}</span><b>${p}</b></li>`).join("");
 $("commPrices").innerHTML=COMMISSIONS.map(([s,p])=>`<li><span>${s}</span><b>${p}</b></li>`).join("");
 
 $("commForm").addEventListener("submit",e=>{
@@ -582,9 +551,9 @@ $("commForm").addEventListener("submit",e=>{
   if(!n||!/^\S+@\S+\.\S+$/.test(em)){ s.textContent="Please add your name and a valid email so Audrey can reply."; return; }
   if(!FORM_ENDPOINT){ s.textContent=`Thanks, ${n.split(" ")[0]}! This form isn't connected to email yet, so nothing was sent. Until it is, please email ${EMAIL} with your request and photos.`; return; }
   const btn=e.target.querySelector("button[type=submit]"); btn.disabled=true; s.textContent="Sending…";
-  const data=new FormData(e.target); data.append("_subject",`Commission request from ${n}`);
+  const data=new FormData(e.target); const what=$("cType").value, pc=$("cPiece").value; data.append("_subject",`${what.replace(/^An? /,"").replace(/^./,c=>c.toUpperCase())} inquiry from ${n}${(what==="A print"||what==="An original painting")&&pc?` (${pc})`:""}`); data.append("_replyto",em);
   fetch(FORM_ENDPOINT,{method:"POST",body:data,headers:{Accept:"application/json"}})
-    .then(r=>{ if(!r.ok) throw 0; s.textContent=`Thanks, ${n.split(" ")[0]}! Your request was sent. Audrey will reply to ${em} within a few days.`; e.target.reset(); })
+    .then(r=>{ if(!r.ok) throw 0; s.textContent=`Thanks, ${n.split(" ")[0]}! Your message was sent. Audrey will reply to ${em} within a few days.`; e.target.reset(); syncForm(); })
     .catch(()=>{ s.textContent=`Sorry, that didn't go through. Please try again, or email ${EMAIL} directly.`; })
     .finally(()=>{ btn.disabled=false; });
 });
